@@ -1,8 +1,8 @@
-# CommunityScale Regional Housing Market Demand Methodology
+# CommunityScale Housing Market Demand Methodology
 
 ## Overview
 
-The Regional Market Demand model forecasts housing demand by price point, tenure (rent vs. own), and bedroom count for households moving within the next year. This methodology combines population projections, household formation forecasts, and detailed microdata on household preferences to generate granular market demand estimates that reflect realistic household behavior and willingness to pay for housing.
+The Market Demand model forecasts housing demand by price point, tenure (rent vs. own), and bedroom count for households moving within the next year within a region and then scales the demand based on the capture rate for a specific planning area. This methodology combines population projections, household formation forecasts, and detailed microdata on household preferences to generate granular market demand estimates that reflect realistic household behavior and willingness to pay for housing.
 
 ## Regional Market Area Definition
 
