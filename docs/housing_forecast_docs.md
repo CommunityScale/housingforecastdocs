@@ -19,14 +19,14 @@
 
 **Recommended citation for the CommunityScale Housing Forecast App:**
 
-> CommunityScale Housing Forecast (2025). Housing needs analysis and population projection tool. Available at: https://housing.communityscale.io
+> CommunityScale Housing Forecast (2025). Housing needs analysis and population projection tool. Available at: https://app.communityscale.io
 
 
 ```bibtex
 @misc{communityscale2025,
   title = {CommunityScale Housing Forecast},
   year = {2025},
-  howpublished = {\url{https://housing.communityscale.io}},
+  howpublished = {\url{https://app.communityscale.io}},
   note = {Housing needs analysis and population projection tool}
 }
 ```
