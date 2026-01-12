@@ -165,6 +165,18 @@
 
     <!-- Map container -->
     <div id="map" class="flex-grow relative">
+        <!-- Map controls -->
+        <div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
+            <button id="zoom-in" class="bg-white hover:bg-gray-100 rounded shadow-lg w-10 h-10 flex items-center justify-center text-gray-700 font-bold text-xl border border-gray-300">
+                +
+            </button>
+            <button id="zoom-out" class="bg-white hover:bg-gray-100 rounded shadow-lg w-10 h-10 flex items-center justify-center text-gray-700 font-bold text-xl border border-gray-300">
+                −
+            </button>
+            <button id="reset-extent" class="bg-white hover:bg-gray-100 rounded shadow-lg w-10 h-10 flex items-center justify-center border border-gray-300" title="Reset to town extent">
+                <span class="material-icons text-black">refresh</span>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -258,6 +270,9 @@
         center: CUSTOM_CENTER || [-73.1, 43.0],
         zoom: CUSTOM_ZOOM || 9
     });
+
+    // Add navigation control
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     // Map load handler
     map.on('load', () => {
@@ -645,7 +660,7 @@
         const breaks = calculateQuantileBreaks(values, 5);
 
         // Use 5 colors from the palette (lightest to darkest for low to high)
-        const salesColors = ['#e4e0fc', '#aebffc', '#6e79d9', '#3445b0', '#192f5e'];
+        const salesColors = ['#c2d8ff', '#adbfff', '#8795eb', '#6e79dd', '#3445b0'];
 
         // Create color expression for circle-color
         const colorExpression = [
@@ -674,7 +689,7 @@
                 'circle-color': colorExpression,
                 'circle-stroke-color': '#ffffff',
                 'circle-stroke-width': 1,
-                'circle-opacity': 1.0
+                'circle-opacity': 1
             }
         });
 
@@ -770,7 +785,7 @@
         const breaks = calculateQuantileBreaks(values, 5);
 
         // Use 5 colors from the palette (lightest to darkest for low to high)
-        const rentalColors = ['#e4e0fc', '#aebffc', '#6e79d9', '#3445b0', '#192f5e'];
+        const rentalColors = ['#c2d8ff', '#adbfff', '#8795eb', '#6e79dd', '#3445b0'];
 
         // Create color expression for circle-color
         const colorExpression = [
@@ -799,7 +814,7 @@
                 'circle-color': colorExpression,
                 'circle-stroke-color': '#ffffff',
                 'circle-stroke-width': 1,
-                'circle-opacity': 1.0
+                'circle-opacity': 0.8
             }
         });
 
@@ -888,7 +903,7 @@
         legendContent.innerHTML = '';
 
         // Use 5 colors (lightest to darkest for low to high)
-        const salesColors = ['#e4e0fc', '#aebffc', '#6e79d9', '#3445b0', '#192f5e'];
+        const salesColors = ['#c2d8ff', '#adbfff', '#8795eb', '#6e79dd', '#3445b0'];
 
         // Create labels for 5 quantiles
         const labels = [
@@ -1057,6 +1072,40 @@
         });
     });
 
+    // Zoom controls
+    document.getElementById('zoom-in').addEventListener('click', () => {
+        map.zoomIn();
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+        map.zoomOut();
+    });
+
+    document.getElementById('reset-extent').addEventListener('click', () => {
+        // Zoom to Dorset municipality bounds
+        const features = map.querySourceFeatures('municipality-source', {
+            sourceLayer: 'geos',
+            filter: ['==', ['get', 'name'], 'Dorset, VT']
+        });
+
+        if (features.length > 0) {
+            const bounds = new mapboxgl.LngLatBounds();
+            features.forEach(feature => {
+                if (feature.geometry.type === 'Polygon') {
+                    feature.geometry.coordinates[0].forEach(coord => {
+                        bounds.extend(coord);
+                    });
+                } else if (feature.geometry.type === 'MultiPolygon') {
+                    feature.geometry.coordinates.forEach(polygon => {
+                        polygon[0].forEach(coord => {
+                            bounds.extend(coord);
+                        });
+                    });
+                }
+            });
+            map.fitBounds(bounds, { padding: 50 });
+        }
+    });
 </script>
 
 </body>
