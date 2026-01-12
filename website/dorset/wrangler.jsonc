@@ -2,6 +2,7 @@
   "name": "dorset",
   "compatibility_date": "2025-06-04",
   "assets": {
-    "directory": "./"
+    "directory": "./",
+    "exclude": ["USA_CTs_251222.json", "USA_zips_251222.json"]
   }
 }
