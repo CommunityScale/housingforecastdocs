@@ -1,0 +1,6 @@
+name = "willcounty"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+account_id = "6ab7c35932ea551caab80e542cdd5f52"
+assets = { directory = "." }
+
