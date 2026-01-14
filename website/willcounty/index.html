@@ -2,21 +2,22 @@
 <html lang="en">
 
 <head>
-  <!-- Basic Meta Tags -->
+  <!-- ========================================
+       META TAGS
+       ======================================== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Modern dashboard interface for data visualization and analytics. Clean, responsive design with real-time insights and comprehensive reporting tools.">
   <meta name="keywords" content="dashboard, analytics, data visualization, business intelligence, reporting, charts, metrics">
-  <meta name="author" content="Will Countyy Housing Study Dashboard">
+  <meta name="author" content="Will County Housing Study Dashboard">
   <meta name="robots" content="index, follow">
   <meta name="language" content="en">
   <meta name="theme-color" content="#3B82F6">
   <meta name="color-scheme" content="light dark">
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://https://communityscale.github.io/JohnsonCounty/"> /* update this */
+  <link rel="canonical" href="https://communityscale.github.io/JohnsonCounty/">
 
-  <!-- Title -->
   <title>Will County Housing Study Dashboard</title>
 
   <!-- OpenGraph Meta Tags -->
@@ -64,16 +65,9 @@
   <meta name="msapplication-TileColor" content="#3B82F6">
   <meta name="msapplication-config" content="/browserconfig.xml">
 
-  <!-- Web App Manifest
-  <link rel="manifest" href="/manifest.json">
-  <meta name="application-name" content="HF Mock Dashboard">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="HF Dashboard">
-   -->
-
-  <!-- Google Analytics 4 -->
+  <!-- ========================================
+       ANALYTICS
+       ======================================== -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -95,8 +89,8 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "CommunityScale Housing Forecast",
-    "description": "Housing forecast and housing needs assessment for [place]",
-    "url": "https://https://communityscale.github.io/JohnsonCounty/", /*update this*/
+    "description": "Housing forecast and housing needs assessment for Will County",
+    "url": "https://communityscale.github.io/JohnsonCounty/",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web Browser",
     "offers": {
@@ -107,14 +101,16 @@
     "author": {
       "@type": "Organization",
       "name": "CommunityScale Housing Forecast",
-      "url": "https://https://communityscale.github.io/JohnsonCounty/" /*update this*/
+      "url": "https://communityscale.github.io/JohnsonCounty/"
     }
   }
   </script>
 
+  <!-- ========================================
+       STYLESHEETS & FONTS
+       ======================================== -->
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./tailwind.config.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -127,69 +123,67 @@
     }
   </script>
 
-  <!-- Material Icons CDN -->
+  <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <!-- ========================================
+       CUSTOM STYLES
+       ======================================== -->
   <style>
-    /* Additional styling to match the original SVG appearance */
-    .material-icons-outlined {
-      font-size: 1.25rem;
-      /* Equivalent to h-5 w-5 */
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-
-    /* Critical CSS for performance */
+    /* ===== Performance & UX ===== */
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 100px; /* Offset for sticky header */
+      scroll-padding-top: 100px;
     }
 
     body {
       font-display: swap;
     }
+
+    /* ===== Material Icons Sizing ===== */
+    .material-icons-outlined {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    /* ===== Datawrapper Iframe Responsiveness ===== */
+    iframe[id^="datawrapper-chart"] {
+      width: 0;
+      min-width: 100% !important;
+      border: none;
+    }
   </style>
 </head>
 
 <body class="bg-gray-50 min-h-screen">
-  <!-- Header -->
+
+  <!-- ========================================
+       HEADER & NAVIGATION
+       ======================================== -->
   <header class="bg-white shadow sticky top-0 z-50">
     <nav class="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8" aria-label="Global">
+      <!-- Logo & Title -->
       <div class="flex lg:flex-1">
         <a href="https://willcountyced.com/" class="-m-1.5 p-1.5">
           <span class="sr-only">Will County Housing Study and Strategic Action Plan</span>
           <img class="h-8 w-auto" src="images/CEDlogo.png" alt="CED logo" />
         </a>
-        <h1 class="hidden lg:block ml-4 text-xl font-bold text-gray-900 self-center">Will County Housing Study and Strategic Action Plan</h1>
+        <h1 class="hidden lg:block ml-4 text-xl font-bold text-gray-900 self-center">
+          Will County Housing Study and Strategic Action Plan
+        </h1>
       </div>
+
+      <!-- Desktop Navigation -->
       <div class="hidden lg:flex lg:gap-x-6">
         <a href="#" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
           <span class="material-icons-outlined text-sm">arrow_upward_alt</span>
           Top
         </a>
-        <!--
-        <a href="#findings" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
-          <span class="material-icons-outlined text-sm">search</span>
-          Findings
-        </a>
-        -->
-       
-        <!--
-        <a href="#map" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
-          <span class="material-icons-outlined text-sm">map</span>
-          Map
-        </a>
-        -->
-       
-        <!--
-        <a href="https://form.jotform.com/252453026420143" target="_blank" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
-          <span class="material-icons-outlined text-sm">campaign</span>
-          Survey
-        </a>
-        -->
       </div>
-      
+
+      <!-- Mobile Menu Button -->
       <div class="flex lg:hidden">
         <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
           <span class="sr-only">Open main menu</span>
@@ -200,7 +194,7 @@
       </div>
     </nav>
 
-    <!-- Mobile menu -->
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
       <div class="fixed inset-0 z-50"></div>
       <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -209,7 +203,9 @@
             <span class="sr-only">CommunityScale</span>
             <img class="h-8 w-auto" src="cslogo.svg" alt="" />
           </a>
-          <a href="#" class="ml-auto rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 whitespace-nowrap">Sign up</a>
+          <a href="#" class="ml-auto rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 whitespace-nowrap">
+            Sign up
+          </a>
           <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
             <span class="sr-only">Close menu</span>
             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -220,12 +216,7 @@
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <!--
-              <a href="#map" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Map</a>
-              -->
-              <!--
-              <a href="https://form.jotform.com/252453026420143" target="_blank" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Survey</a>
-              -->
+              <!-- Mobile navigation links go here -->
             </div>
             <div class="py-6">
               <!-- Mobile search -->
@@ -244,12 +235,15 @@
     </div>
   </header>
 
-  <!-- Intro section -->
+  <!-- ========================================
+       HERO SECTION
+       ======================================== -->
   <div class="relative border-t border-b border-gray-200 pt-20 pb-20 bg-white overflow-hidden">
-    <!-- Background image with gradient overlay -->
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('images/PellCityAerial2.jpg')">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('images/building.png')">
       <div class="absolute inset-0 bg-gradient-to-r from-white/90 to-white/70"></div>
     </div>
+
     <!-- Content -->
     <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
       <div class="sm:mx-auto sm:max-w-3xl px-4 sm:px-6">
@@ -257,30 +251,25 @@
           <span class="font-light tracking-wide">Will County</span><br>
           <span class="font-bold">Housing Study and Strategic Action Plan</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-700 leading-relaxed">This dashboard supports Will County's Housing Study and Strategic Action Plan, conducted by the <a href="https://willcountyced.com/" target="_blank" class="text-gray-700 hover:underline">Will County Center for Economic Development</a> and <a href="https://communityscale.io/" target="_blank" class="text-gray-700 hover:underline">CommunityScale</a>.</p>    
+        <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+          This dashboard supports Will County's Housing Study and Strategic Action Plan, conducted by the 
+          <a href="https://willcountyced.com/" target="_blank" class="text-gray-700 hover:underline">Will County Center for Economic Development</a> 
+          and <a href="https://communityscale.io/" target="_blank" class="text-gray-700 hover:underline">CommunityScale</a>.
+        </p>
         <br>
-        <p class="text-lg md:text-xl text-gray-700 leading-relaxed">This dashboard will be periodically updated with additional information drawn from ongoing analysis, stakeholder engagement, and draft recommendations.</p>    
-        <!--
-        <br>
-        <br>
-        <div class="flex items-center gap-4">
-          <span class="isolate inline-flex rounded-md shadow-lg">
-            <a href="https://form.jotform.com/252453026420143" target="_blank" class="relative inline-flex items-center justify-center gap-2 rounded-md bg-gray-600 px-8 py-3 text-base font-bold text-white shadow-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105 min-w-[160px]">
-              <span class="material-icons-outlined text-xl">campaign</span>
-              Take the survey
-            </a>
-          </span>
-          <p class="text-gray-700 pb-2">Please review this page for information on study goals and findings to date, then complete the public survey to help inform the study. Your input will be incorporated into recommendations, reports, and next steps.</p>
-        </div>
-        -->
+        <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+          This dashboard will be periodically updated with additional information drawn from ongoing analysis, stakeholder engagement, and draft recommendations.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- ========================================
+       MAIN CONTENT
+       ======================================== -->
   <main class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 space-y-6">
 
-    <!-- Project Purpose Card -->
+    <!-- About this Study Card -->
     <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
       <div class="px-4 py-5 sm:px-6">
         <h3 class="text-3xl font-semibold leading-9 text-gray-900">About this Study</h3>
@@ -288,227 +277,263 @@
       <div class="px-4 py-5 sm:p-6">
         <div class="flex flex-col md:flex-row gap-6">
           <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">This comprehensive, county-wide housing study will provide a data-driven framework to promote housing that meets the needs of Will County communities.</p>
-				  </div>
+            <p class="text-gray-700 pb-2">
+              This comprehensive, county-wide housing study will provide a data-driven framework to promote housing that meets the needs of Will County communities.
+            </p>
+          </div>
           <div class="md:w-4/6">
-            <img src="images/Oak-Village-2024-1024x514.png" width="100%" class="rounded-lg">
+            <img src="images/townhome.png" width="100%" class="rounded-lg">
           </div>
         </div>
+        
+        <!-- Study Goals -->
         <div class="px-4 py-5 sm:p-6">
           <h3 class="text-lg font-medium leading-6 text-gray-900">Study goals:</h3>
           <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+            <!-- Goal 1 -->
             <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
               <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
               </dt>
-              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">Evaluate housing and demographics to understand housing need and demand, and set a preliminary production target.</dd>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Evaluate housing and demographics to understand housing need and demand, and set a preliminary production target.
+              </dd>
             </div>
+            
+            <!-- Goal 2 -->
             <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
               <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
               </dt>
-              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">Identify the most suitable sites for different types of housing based on spatial and socioeconomic criteria.</dd>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Identify the most suitable sites for different types of housing based on spatial and socioeconomic criteria.
+              </dd>
             </div>
+            
+            <!-- Goal 3 -->
             <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
               <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
               </dt>
-              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">Assess local barriers to housing and development feasibility for proforma missing middle housing types.</dd>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Assess local barriers to housing and development feasibility for proforma missing middle housing types.
+              </dd>
             </div>
-              <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
+            
+            <!-- Goal 4 -->
+            <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
               <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
               </dt>
-              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">Create a strategic action plan, with priority actions and a best practices library.</dd>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Create a strategic action plan, with priority actions and a best practices library.
+              </dd>
             </div>
           </dl>
-        </div>	
+        </div>
       </div>
-
-      <script>
-        function toggleSourcesInfo() {
-          const details = document.getElementById('sourcesDetailsInfo');
-          const chevron = document.getElementById('chevronIconInfo');
-
-          details.classList.toggle('hidden');
-          chevron.classList.toggle('rotate-180');
-        }
-
-        // Add event listener for sources toggle in population card
-        document.getElementById('sourcesToggleInfo').addEventListener('click', toggleSourcesInfo);
-      </script>
     </div>
+
+    <!-- Study Area Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Study Area</h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              This study includes analysis and findings for Will County overall, as well as observations for six subregions.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <img src="images/subregions.png" width="100%" class="rounded-lg">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Age Change Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Will County's local population is rapidly aging, and trends suggest young talent is moving elsewhere.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              The population of people entering the workforce (age 20-34) is decreasing across Will County. In all but the East subregion, this group is projected to make up a smaller share of the population. This age group has a negative net migration rate.
+            </p>
+            <br>
+            <p class="text-gray-700 pb-2">
+              In contrast, the population of people age 65+ is projected to significantly increase across the county.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="People entering the workforce by subregion" aria-label="Line chart" id="datawrapper-chart-ctpF3" src="https://datawrapper.dwcdn.net/ctpF3/2/" scrolling="no" frameborder="0" height="418" data-external="1"></iframe>
+            <br>
+            <iframe title="People leaving the workforce by subregion" aria-label="Line chart" id="datawrapper-chart-SOY4x" src="https://datawrapper.dwcdn.net/SOY4x/1/" scrolling="no" frameborder="0" height="451" data-external="1"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Household Structure Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Will County is home to fewer families with children, and more small households.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Over the past decade, Will County's mix of family types has shifted in ways that imply changes in local housing needs and preferences. For example:
+            </p>
+            <p class="text-gray-700 pb-2">
+              <strong>More adults living with parents and roommates</strong> suggests younger adults want to live in Will County but can't find and/or afford housing of their own.
+            </p>
+            <p class="text-gray-700 pb-2">
+              <strong>More seniors living alone</strong> suggests some older residents may be interested in downsizing from a house that is too large for them into something smaller and lower-maintenance.
+            </p>
+            <p class="text-gray-700 pb-2">
+              <strong>Fewer families with children</strong> suggests a mismatch between the housing and lifestyle available in Will County, and the needs of young families with kids.
+            </p>
+            <br>
+            <p class="text-gray-700 pb-2">
+              These trends span all 6 subregions, with the sharpest decrease in families with children in the Northeast and the more rural East and Southwest regions. As a result, school enrollment has declined by 9% since 2018.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Will County changes in household structure" aria-label="Grouped Bars" id="datawrapper-chart-RLhpF" src="https://datawrapper.dwcdn.net/RLhpF/1/" scrolling="no" frameborder="0" height="393" data-external="1"></iframe>
+            <br>
+            <iframe title="Will County School Enrollment" aria-label="Column Chart" id="datawrapper-chart-ZN9Sl" src="https://datawrapper.dwcdn.net/ZN9Sl/1/" scrolling="no" frameborder="0" height="410" data-external="1"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jobs and Workers Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Will County is adding more jobs than workers.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:px-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Over the past decade, Will County has added a significant number of new jobs, but has not added new resident workers at the same rate. As a result, a declining share of local jobs are held by local residents.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Will County is primarily a bedroom community, with 68% of residents commuting to work outside of the county.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Jobs and workers added since 2015" aria-label="Line chart" id="datawrapper-chart-3YGtC" src="https://datawrapper.dwcdn.net/3YGtC/1/" scrolling="no" frameborder="0" height="414" data-external="1"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Housing Diversity Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Will County's housing does not offer many options for smaller households, young professionals, or downsizing seniors.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-3/6">
+            <p class="text-gray-700 pb-2">
+              Most units in Will County are detached single family with 3+ bedrooms. The county offers few smaller units and rentals.
+            </p>
+            <p class="text-gray-700 pb-2">
+              The housing stock offers limited options for young professionals and first-time homebuyers, who also prefer townhouses, condos, and apartments, as well as small (less than 3 bed) single-family homes.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Additionally, most nonfamily households earn less than the median income and may need smaller, lower-cost housing options in the future. This would be especially true for seniors aging in houses that are larger than they need and increasingly difficult and costly to maintain.
+            </p>
+          </div>
+          <div class="md:w-3/6">
+            <iframe title="Housing units by structure type across subregions" aria-label="Stacked Bars" id="datawrapper-chart-qLsEe" src="https://datawrapper.dwcdn.net/qLsEe/1/" scrolling="no" frameborder="0" height="267" data-external="1"></iframe>
+            <br>
+            <iframe title="Home size across subregions" aria-label="Stacked Bars" id="datawrapper-chart-OmOB1" src="https://datawrapper.dwcdn.net/OmOB1/1/" scrolling="no" frameborder="0" height="267" data-external="1"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Housing Tenure Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Will County has fewer rental units, and is building less multifamily housing than similar suburban counties.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:px-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Less than 20% of Will County's housing units are rentals, and most of these are concentrated in the Central region. Young adults and early-career professionals typically prefer rental housing, and there are limited options in Will County. Both Lake and DuPage counties have a higher percentage of rental housing.
+            </p>
+            <p class="text-gray-700 pb-2">
+              In the past 10 years, all three counties have built mostly single-family homes. Will County has built the fewest multifamily units - only 18% of newly built homes in Will County were multifamily, compared with 35% in Lake and DuPage counties.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Units by tenure" aria-label="Stacked Bars" id="datawrapper-chart-lZSBK" src="https://datawrapper.dwcdn.net/lZSBK/1/" scrolling="no" frameborder="0" height="177" data-external="1"></iframe>
+            <br>
+            <iframe title="Building permits by housing type, 2014-2024" aria-label="Stacked Bars" id="datawrapper-chart-7vqfh" src="https://datawrapper.dwcdn.net/7vqfh/1/" scrolling="no" frameborder="0" height="177" data-external="1"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Affordability Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Homes in Will County are less affordable than they used to be, and prices are out of reach for single-income earners.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Home prices remain affordable to median income households in most subregions, but housing is less affordable than it was 10 years ago.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Prices differ by region. Households in the East, Central, and Southwest subregions would have difficulty affording a home in the Northwest, Northeast, and East Central subregions.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Higher-earning individuals - like a mid-career worker with an income of $112,000 - may be able to afford a home, as can most workers if they are part of a household with multiple wages. However, young professionals, who are more likely to be single and have lower incomes - like an early-career worker with an income of $65,000 - cannot afford home prices in most of the county.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Typical home price over time by sub-region" aria-label="Line chart" id="datawrapper-chart-kyeU9" src="https://datawrapper.dwcdn.net/kyeU9/1/" scrolling="no" frameborder="0" height="365" data-external="1"></iframe>
+          </div>
+        </div>
+      </div>
       
-  </main>
-
-  <!-- Key Indicators Section -->
-  <!--
-  <div class="border-t border-b border-gray-200 pt-5 pb-5 text-center bg-white" id="findings">
-    <h3 class="text-3xl font-semibold leading-9 text-gray-900">Key findings from the analysis.</h3>
-    <p class="text-gray-700 pb-2">These are some key indicators...</p>
-    <span class="isolate inline-flex rounded-md shadow-xs">
-      <button type="button" class="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 inset-ring-1 inset-ring-gray-300 hover:bg-gray-50 focus:z-10">Growth</button>
-      <button type="button" class="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 inset-ring-1 inset-ring-gray-300 hover:bg-gray-50 focus:z-10">Aging</button>
-      <button type="button" class="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 inset-ring-1 inset-ring-gray-300 hover:bg-gray-50 focus:z-10">Days</button>
-    </span>
-  </div>
-  -->
-  <main class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 space-y-6">
-
-        <!-- Subregions -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Subregions.</h3>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">subregions intro. </p>
-          </div>
-          <div class="md:w-4/6">
-            <iframe title="People entering the workforce by subregion" aria-label="Line chart" id="datawrapper-chart-ctpF3" src="https://datawrapper.dwcdn.net/ctpF3/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="418" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-          </div>
-        </div>
-      </div>
-            <script>
-        function toggleSourcesInfo() {
-          const details = document.getElementById('sourcesDetailsInfo');
-          const chevron = document.getElementById('chevronIconInfo');
-
-          details.classList.toggle('hidden');
-          chevron.classList.toggle('rotate-180');
-        }
-
-        // Add event listener for sources toggle in population card
-        document.getElementById('sourcesToggleInfo').addEventListener('click', toggleSourcesInfo);
-      </script>
-    </div>
-
-    <!-- Age change chard -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Will County’s local population is rapidly aging, and trends suggest young talent is moving elsewhere.</h3>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">The population of people entering the workforce (age 20-34) is decreasing across Will County. In all but the East subregion, this group is projected to make up a smaller share of the population. This age group has a negative net migration rate. </p>
-            <p class="text-gray-700 pb-2">In contrast, the population of people age 65+ is projected to significantly increase across the county.</p>
-          </div>
-          <div class="md:w-4/6">
-            <iframe title="People entering the workforce by subregion" aria-label="Line chart" id="datawrapper-chart-ctpF3" src="https://datawrapper.dwcdn.net/ctpF3/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="418" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-            <br>
-            <iframe title="People leaving the workforce by subregion" aria-label="Line chart" id="datawrapper-chart-SOY4x" src="https://datawrapper.dwcdn.net/SOY4x/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="451" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-          </div>
-        </div>
-      </div>
-    </div>
-
-<!-- Household Structure Card -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Will County is home to fewer families with children, and more small households.</h3>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-3/6">
-            <p class="text-gray-700 pb-2">Over the past decade, Will County's mix of family types has shifted in ways that imply changes in local housing needs and preferences. For example:</p>
-            <p class="text-gray-700 pb-2"><strong>More adults living with parents and roommates</strong> suggests younger adults want to live in Will County but can't find and/or afford housing of their own.</p>
-            <p class="text-gray-700 pb-2"><strong>More seniors living alone</strong> suggests some older residents may be interested in downsizing from a house that is too large for them into something smaller and lower-maintenance.</p>
-            <p class="text-gray-700 pb-2"><strong>Fewer families with children</strong> suggests a mismatch between the housing and lifestyle available in Will County, and the needs of young families with kids.</p>
-            <p class="text-gray-700 pb-2">These trends span all 6 subregions, with the sharpest decrease in families with children in the Northeast and the more rural East and Southwest regions. As a result, school enrollment has declined by 9% since 2018.</p>
-          </div>
-          <div class="md:w-3/6">
-            <iframe title="Will County changes in household structure" aria-label="Grouped Bars" id="datawrapper-chart-RLhpF" src="https://datawrapper.dwcdn.net/RLhpF/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="393" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-            <br>
-            <iframe title="Will County School Enrollment" aria-label="Column Chart" id="datawrapper-chart-ZN9Sl" src="https://datawrapper.dwcdn.net/ZN9Sl/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="410" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-          </div>
-      </div>
-      </div>
-    </div>
-
-<!-- Jobs and Workers Card -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Will County is adding more jobs than workers.</h3>
-      </div>
-      <div class="px-4 py-5 sm:px-6">  
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">Over the past decade, Will County has added a significant number of new jobs, but has not added new resident workers at the same rate. As a result, a declining share of local jobs are held by local residents.</p>
-            <p class="text-gray-700 pb-2">Will County is primarily a bedroom community, with 68% of residents commuting to work outside of the county.</p>
-            </div>
-          <div class="md:w-4/6">
-            <iframe title="Jobs and workers added since 2015" aria-label="Line chart" id="datawrapper-chart-3YGtC" src="https://datawrapper.dwcdn.net/3YGtC/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="414" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  <!-- Housing Diversity Card -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Will County's housing does not offer many options for smaller households, young professionals, or downsizing seniors.</h3>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-3/6">
-            <p class="text-gray-700 pb-2">Most units in Will County are detached single family with 3+ bedrooms. The county offers few smaller units and rentals.</p>
-            <p class="text-gray-700 pb-2">The housing stock offers limited options for young professionals and first-time homebuyers, who also prefer townhouses, condos, and apartments, as well as small (less than 3 bed) single-family homes.</p>
-            <p class="text-gray-700 pb-2">Additionally, most nonfamily households earn less than the median income and may need smaller, lower-cost housing options in the future. This would be especially true for seniors aging in houses that are larger than they need and increasingly difficult and costly to maintain.</p>
-          </div>
-          <div class="md:w-3/6">
-           <iframe title="Housing units by structure type across subregions" aria-label="Stacked Bars" id="datawrapper-chart-qLsEe" src="https://datawrapper.dwcdn.net/qLsEe/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="267" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-            <br>
-            <iframe title="Home size across subregions" aria-label="Stacked Bars" id="datawrapper-chart-OmOB1" src="https://datawrapper.dwcdn.net/OmOB1/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="267" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- Housing Tenure Card -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Will County only has a small share of rental units, and has fewer rentals than neighboring counties.</h3>
-      </div>
-      <div class="px-4 py-5 sm:px-6">  
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">tktktkt rentals.</p>
-            <p class="text-gray-700 pb-2">tktktkt building permits.</p>
-            </div>
-          <div class="md:w-4/6">
-            <iframe title="Units by tenure" aria-label="Stacked Bars" id="datawrapper-chart-lZSBK" src="https://datawrapper.dwcdn.net/lZSBK/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="177" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-            <br>
-            <iframe title="Building permits by housing type, 2014-2024" aria-label="Stacked Bars" id="datawrapper-chart-7vqfh" src="https://datawrapper.dwcdn.net/7vqfh/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="177" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Affordability Chart Card -->
-    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Will County is less affordable than it used to be, and prices are out of reach for single-income earners.</h3>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/6">
-           <p class="text-gray-700 pb-2">Home prices remain affordable to median income earners in most subregions, but housing is less affordable than it was 10 years ago. </p>
-           <p class="text-gray-700 pb-2">People in the East, Central, and Southwest subregions would have difficulty affording a home in the Northwest, Northeast, and East Central subregions.</p>
-           <p class="text-gray-700 pb-2">Higher-earning professionals may be able to afford a home if they are part of a household with multiple wages, but young professionals (who are more likely to be single) cannot afford home prices in most of the county. Young, single-earning people just entering the workforce are completely priced out of homeownership.</p>
-          </div>
-          <div class="md:w-4/6">
-            <iframe title="Typical home price over time by sub-region" aria-label="Line chart" id="datawrapper-chart-kyeU9" src="https://datawrapper.dwcdn.net/kyeU9/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="365" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
-          </div>
-        </div>
-      </div>
+      <!-- Expandable Affordability Factors -->
       <div class="px-4 py-4 sm:px-6">
         <button id="sourcesToggleAfford" class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-900 hover:text-gray-700 focus:outline-none">
           <div class="flex items-center">
-            <span class="material-icons-outlined mr-2 text-gray-400">
-              ssid_chart
-            </span>
+            <span class="material-icons-outlined mr-2 text-gray-400">ssid_chart</span>
             Contributing factors to affordability
           </div>
           <svg id="chevronIconAfford" class="h-5 w-5 text-gray-400 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -516,9 +541,7 @@
           </svg>
         </button>
 
-        <!-- Sources Section (Initially Hidden) -->
         <div id="sourcesDetailsAfford" class="hidden mt-2 pt-2 border-t border-gray-100">
-          <!-- Table start -->
           <div class="flow-root">
             <div class="overflow-x-auto">
               <div class="inline-block min-w-full align-middle">
@@ -552,394 +575,101 @@
                 </table>
               </div>
             </div>
-          </div> <!-- end of table -->
+          </div>
         </div>
       </div>
-
-      <script>
-        function toggleSourcesAfford() {
-          const details = document.getElementById('sourcesDetailsAfford');
-          const chevron = document.getElementById('chevronIconAfford');
-
-          details.classList.toggle('hidden');
-          chevron.classList.toggle('rotate-180');
-        }
-
-        // Add event listener for sources toggle in population card
-        document.getElementById('sourcesToggleAfford').addEventListener('click', toggleSourcesAfford);
-      </script>
     </div>
 
-  <!-- Revitalization card -->
+    <!-- Revitalization Card -->
     <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
       <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Nearly all new housing in Will County is in new subdivisions in previously undeveloped areas, with a lack of investment in urban areas.</h3>
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Nearly all new housing in Will County is in new subdivisions in previously undeveloped areas, with a lack of investment in urban areas.
+        </h3>
       </div>
-      <div class="px-4 py-5 sm:px-6">  
+      <div class="px-4 py-5 sm:px-6">
         <div class="flex flex-col md:flex-row gap-6">
           <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">tktktktk density chart.</p>
-            <p class="text-gray-700 pb-2">tktktktk amenites.</p>
-            </div>
-          <div class="md:w-4/6">
-            <iframe title="Units by tenure" aria-label="Stacked Bars" id="datawrapper-chart-lZSBK" src="https://datawrapper.dwcdn.net/lZSBK/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="177" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+            <p class="text-gray-700 pb-2">
+              In the past 5 years, nearly all new homes in Will County have been built in undeveloped rural or agricultural areas. Almost no housing has been added in suburbs, and urban areas have seen a net decrease in the number of housing units.
+            </p>
             <br>
-            <iframe title="Building permits by housing type, 2014-2024" aria-label="Stacked Bars" id="datawrapper-chart-7vqfh" src="https://datawrapper.dwcdn.net/7vqfh/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="177" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+            <p class="text-gray-700 pb-2">
+              These urban areas are the most walkable parts of Will County, with the highest concentration of amenities like jobs, schools, grocery stores, and healthcare.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <img src="images/density.png" width="100%" class="rounded-lg">
+            <br>
+            <img src="images/walkable.png" width="100%" class="rounded-lg">
           </div>
         </div>
       </div>
     </div>
-
-    
-    <!-- Production Target Card -->
-    <!--- <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Pell City needs about 500 new units in 10 years to keep up with growth and close existing gaps.</h3>
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="md:w-2/6">
-            <p class="text-gray-700 pb-2">To keep up with growth and fill current housing shortages, Pell City needs about 500 new units over the next 10 years. Recent market trends suggest the city could attract more units over this period, but these may not be of the type and quality community desires.</p>
-          </div>
-          <div class="md:w-4/6">
-            <iframe title="Pell City suggested 10-year housing production target" aria-label="Stacked column chart" id="datawrapper-chart-W67Bn" src="https://datawrapper.dwcdn.net/W67Bn/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="414" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>        
-          </div>
-        </div>
-      </div> --->
-      
-      <!-- Demand table button --> 
-      <!-- <div class="px-4 py-4 sm:px-6">
-        <button id="sourcesToggleProduction" class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-900 hover:text-gray-700 focus:outline-none">
-          <div class="flex items-center">
-            <span class="material-icons-outlined mr-2 text-gray-400">
-              functions
-            </span>
-            Housing production target breakdown
-          </div>
-          <svg id="chevronIconProduction" class="h-5 w-5 text-gray-400 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </button> -->
-
-        <!-- Demand table (Initially Hidden) -->
-        
-       <!-- <div id="sourcesDetailsProduction" class="hidden mt-2 pt-2 border-t border-gray-100"> 
-          <div class="flow-root">
-            <div class="overflow-x-auto">
-              <div class="inline-block min-w-full align-middle">
-                <p class="text-gray-700">
-                This 10-year housing production target accounts for projected household growth plus adjustments intended to relieve underlying market pressures, such as pent up demand and current shortages.</p>
-                <table class="min-w-full">   
-                  <tbody class="bg-white">
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-bold text-gray-900 text-right align-top whitespace-nowrap w-0">506</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-bold text-gray-900">Total 10-year housing production target (2025-2035)</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="pt-2 pb-2">
-                        <div class="border-t-2 border-gray-400"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-semibold text-gray-900 text-right align-top whitespace-nowrap w-0">391</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-semibold text-gray-900">Net growth in households</div>
-                        <div class="text-sm text-gray-600">Projected total household growth from 2025 to 2035 is <span class="font-medium">9.7%</span>.</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="py-0">
-                        <div class="border-b border-dotted border-gray-300"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-semibold text-gray-900 text-right align-top whitespace-nowrap w-0">58</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-semibold text-gray-900">Replacement housing</div>
-                        <div class="text-sm text-gray-600">Annual replacement rate for overall housing stock is <span class="font-medium">0.1%</span></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="py-0">
-                        <div class="border-b border-dotted border-gray-300"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-semibold text-gray-900 text-right align-top whitespace-nowrap w-0">166</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-semibold text-gray-900">Ownership vacancy adjustment</div>
-                        <div class="text-sm text-gray-600">Owner-occupied vacancy is <span class="text-red-600 font-medium">2.4%</span>, above the minimum stable target of 1.5%</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="py-0">
-                        <div class="border-b border-dotted border-gray-300"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-semibold text-gray-900 text-right align-top whitespace-nowrap w-0">76</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-semibold text-gray-900">Rental vacancy adjustment</div>
-                        <div class="text-sm text-gray-600">Rental vacancy is <span class="text-red-600 font-medium">6.5%</span>, below the minimum stable target of 7.4%</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="py-0">
-                        <div class="border-b border-dotted border-gray-300"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-semibold text-gray-900 text-right align-top whitespace-nowrap w-0">0</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-semibold text-gray-900">Overcrowding adjustment</div>
-                        <div class="text-sm text-gray-600">Overcrowding rate is <span class="text-green-600 font-medium">0.7%</span>, below the National avg. of 3.4%</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" class="py-0">
-                        <div class="border-b border-dotted border-gray-300"></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-2 pr-3 text-sm font-semibold text-gray-900 text-right align-top whitespace-nowrap w-0">0</td>
-                      <td class="px-2 py-2 w-full">
-                        <div class="text-sm font-semibold text-gray-900">Substandard housing adjustment</div>
-                        <div class="text-sm text-gray-600">Substandard housing rate is <span class="text-green-600 font-medium">0.5%</span>, above the National avg. of 0.4%</div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> 
-        
-      <div class="px-4 py-4 sm:px-6">
-        <button id="sourcesToggleDemand" class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-900 hover:text-gray-700 focus:outline-none">
-          <div class="flex items-center">
-            <span class="material-icons-outlined mr-2 text-gray-400">
-              calculate
-            </span>
-            Housing production target methodology
-          </div>
-          <svg id="chevronIconDemand" class="h-5 w-5 text-gray-400 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </button> --> 
-
-        <!-- Sources Section (Initially Hidden) -->
-        <div id="sourcesDetailsDemand" class="hidden mt-2 pt-2 border-t border-gray-100">
-          <p class="text-sm text-gray-600 mb-3">
-            <strong>10-Year Housing Production Target Methodology</strong>
-          </p>
-          <p class="text-sm text-gray-600 mb-2">
-            The housing production target represents the total number of new housing units needed over a 10-year period to accommodate projected growth while addressing existing market imbalances. This comprehensive approach accounts for six distinct components of housing need.
-          </p>
-          <p class="text-sm text-gray-600 mb-2">
-            <strong>Net Household Growth</strong> forms the baseline demand, calculated by projecting net positive household growth as described earlier. The household formation rate captures demographic shifts and changing living arrangements over the forecast period.
-          </p>
-          <p class="text-sm text-gray-600 mb-2">
-            <strong>Replacement Housing</strong> accounts for units lost to demolition, disaster, or conversion to non-residential use. The annual replacement rate is calculated from historical patterns in the American Community Survey's year-built data (B25034), identifying the typical rate at which older housing stock exits the market.
-          </p>
-          <p class="text-sm text-gray-600 mb-2">
-            <strong>Vacancy Adjustments</strong> ensure healthy market functioning by comparing current vacancy rates to minimum stability targets. For owner-occupied units, a 1.5% vacancy rate enables normal market turnover for home sales. For rentals, a 7.4% vacancy rate (derived from historical market equilibrium analysis) allows reasonable choice and mobility. When current rates fall below these thresholds, additional units are needed to restore market fluidity. The adjustment equals the existing housing stock multiplied by the gap between target and actual vacancy rates. Source: Belsky, E. S., Drew, R. B., & McCue, D. (2007). Projecting the Underlying Demand for New Housing Units: Inferences from the Past, Assumptions about the Future (W07-7). Joint Center for Housing Studies, Harvard University.
-          </p>
-          <p class="text-sm text-gray-600 mb-2">
-            <strong>Overcrowding and Substandard Housing Adjustments</strong> address existing deficiencies in housing quality. Overcrowding (more than one person per room) and substandard conditions (lacking complete plumbing or kitchen facilities) are compared to national averages from ACS data. If local rates exceed national benchmarks, additional units are prescribed to provide adequate housing options. These adjustments equal zero when local conditions are less than the national norms.
-          </p>
-          <p class="text-sm text-gray-600">
-            The total production target sums all component to address market health and housing adequacy.
-          </p>
-        </div>
-        </div>
-
-        <script>
-          function toggleSourcesProduction() {
-            const details = document.getElementById('sourcesDetailsProduction');
-            const chevron = document.getElementById('chevronIconProduction');
-
-            details.classList.toggle('hidden');
-            chevron.classList.toggle('rotate-180');
-          }
-          function toggleSourcesDemand() {
-            const details = document.getElementById('sourcesDetailsDemand');
-            const chevron = document.getElementById('chevronIconDemand');
-
-            details.classList.toggle('hidden');
-            chevron.classList.toggle('rotate-180');
-          }
-
-          // Add event listener for sources toggle in production target card
-          document.getElementById('sourcesToggleProduction').addEventListener('click', toggleSourcesProduction);
-
-          document.getElementById('sourcesToggleDemand').addEventListener('click', toggleSourcesDemand);
-        </script>
-
-      <div class="px-4 py-4 sm:px-6">
-        <button id="sourcesToggleConstruction" class="flex items-center justify-between w-full text-left text-sm font-medium text-gray-900 hover:text-gray-700 focus:outline-none">
-          <div class="flex items-center">
-            <span class="material-icons-outlined mr-2 text-gray-400">
-              construction
-            </span>
-            Historical construction trends
-          </div>
-          <svg id="chevronIconConstruction" class="h-5 w-5 text-gray-400 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </button>
-
-        <!-- Construction Section (Initially Hidden) -->
-        <div id="sourcesDetailsConstruction" class="hidden mt-2 pt-2 border-t border-gray-100">
-          <!-- Table start -->
-          <div class="flow-root">
-            <div class="overflow-x-auto">
-              <p class="text-gray-700 pb-2">Most of Pell City's current housing stock was built between 1970 and 2009 (source: 2023 ACS 5-year). This chart will be updated to reflect units built or permitted since 2020.</p>
-                <div class="inline-block min-w-full align-middle">
-                  <table class="min-w-full divide-y divide-gray-300">
-                    <thead>
-                      <tr>
-                        <th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 align-bottom">Year built</th>
-                        <th scope="col" class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900 align-bottom">Units built</th>
-                        <th scope="col" class="px-2 py-3.5 text-right text-sm font-semibold text-gray-900 align-bottom">Share of current stock</th>
-
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 2020 or later</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">TBD</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">TBD</td>
-
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 2010-2019</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">438</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">8%</td>
-
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 2000-2009</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">1,547</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">27%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1990-1999</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">837</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">15%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1980-1989</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">909</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">16%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1970-1979</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">1,017</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">18%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1960-1969</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">282</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">5%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1950-1959</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">171</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">3%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1940-1949</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">313</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">6%</td>
-                      </tr>
-                      <tr>
-                        <td class="py-2 pr-3 text-sm font-medium whitespace-nowrap text-gray-900">Built 1939 or earlier</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">173</td>
-                        <td class="px-2 py-2 text-sm text-right whitespace-nowrap text-gray-500">3%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-              </div>
-            </div>
-          </div> <!-- end of table -->
-        </div>
-      </div>
-
-      <script>
-        function toggleSourcesConstruction() {
-          const details = document.getElementById('sourcesDetailsConstruction');
-          const chevron = document.getElementById('chevronIconConstruction');
-
-          details.classList.toggle('hidden');
-          chevron.classList.toggle('rotate-180');
-        }
-
-        // Add event listener for sources toggle in construction card
-        document.getElementById('sourcesToggleConstruction').addEventListener('click', toggleSourcesConstruction);
-      </script>
-      </div> 
-
-
-  
-
-        <!-- Scripts -->
-        <script>
-          function toggleSourcesCompare() {
-            const details = document.getElementById('sourcesDetailsCompare');
-            const chevron = document.getElementById('chevronIconCompare');
-
-            details.classList.toggle('hidden');
-            chevron.classList.toggle('rotate-180');
-          }
-
-          // Add event listener for sources toggle in population card
-          document.getElementById('sourcesToggleCompare').addEventListener('click', toggleSourcesCompare);
-        </script>
-
-  
-
-      <!-- Datawrapper responsive height script -->
-      <script type="text/javascript">
-        !function () { "use strict"; window.addEventListener("message", (function (a) { if (void 0 !== a.data["datawrapper-height"]) { var e = document.querySelectorAll("iframe"); for (var t in a.data["datawrapper-height"]) for (var r = 0; r < e.length; r++)if (e[r].contentWindow === a.source) { var i = a.data["datawrapper-height"][t] + "px"; e[r].style.height = i } } })) }();
-      </script> 
 
   </main>
 
-  <!-- Footer -->
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
   <footer class="bg-white mt-8">
     <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
       <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-6">
-        <a href="https://willcountyced.com/" target="_blank"><img src="./images/CEDlogo.png" alt="RPC" class="h-9"></a>
-        <span class="text-sm text-gray-600">The Will County Center for Economic Development (CED) exists to improve the quality of life for all residents of Will County, IL.</span>
-        
-        <!-- CommunityScale Logo -->
-        <a href="https://www.communityscale.com/" target="_blank"><img class="h-9" src="./images/cslogo.svg" alt="CommunityScale" /></a>
-        <!-- CommunityScale Text -->
-        <span class="text-sm text-gray-600">CommunityScale is an urban planning consultancy focused on helping communities across the country improve equity, economic mobility, and housing attainability.</span>
+        <!-- Will County CED -->
+        <a href="https://willcountyced.com/" target="_blank">
+          <img src="./images/CEDlogo.png" alt="RPC" class="h-9">
+        </a>
+        <span class="text-sm text-gray-600">
+          The Will County Center for Economic Development (CED) exists to improve the quality of life for all residents of Will County, IL.
+        </span>
+
+        <!-- CommunityScale -->
+        <a href="https://www.communityscale.com/" target="_blank">
+          <img class="h-9" src="./images/cslogo.svg" alt="CommunityScale" />
+        </a>
+        <span class="text-sm text-gray-600">
+          CommunityScale is an urban planning consultancy focused on helping communities across the country improve equity, economic mobility, and housing attainability.
+        </span>
       </div>
     </div>
   </footer>
 
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
   <script>
+    // Mobile Menu Toggle
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       menu.classList.toggle('hidden');
     }
 
-    function togglePropertyDetails() {
-      const details = document.getElementById('propertyDetails');
-      const chevron = document.getElementById('chevronIcon');
-
+    // Affordability Factors Toggle
+    function toggleSourcesAfford() {
+      const details = document.getElementById('sourcesDetailsAfford');
+      const chevron = document.getElementById('chevronIconAfford');
       details.classList.toggle('hidden');
       chevron.classList.toggle('rotate-180');
     }
 
-    // Add event listener for property details toggle
-    document.getElementById('detailsToggle').addEventListener('click', togglePropertyDetails);
-  </script>
-</body>
+    // Event listener for affordability toggle
+    document.getElementById('sourcesToggleAfford').addEventListener('click', toggleSourcesAfford);
 
+    // Datawrapper Responsive Height Script
+    window.addEventListener("message", function(a) {
+      if (void 0 !== a.data["datawrapper-height"]) {
+        var e = document.querySelectorAll("iframe");
+        for (var t in a.data["datawrapper-height"]) {
+          for (var r = 0; r < e.length; r++) {
+            if (e[r].contentWindow === a.source) {
+              var i = a.data["datawrapper-height"][t] + "px";
+              e[r].style.height = i;
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
 </html>
