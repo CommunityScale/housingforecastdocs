@@ -284,6 +284,9 @@
     // Color palette (darkest to lightest, darkest = highest values)
     const COLOR_PALETTE = ['#192f5e', '#3445b0', '#6e79dd', '#8795eb', '#adbfff', '#c2d8ff'];
 
+    //viridis color palette (to improve legibility for listings info for Brian/Dorset client; darkest to lightest, darkest = lowest value IN THIS PARTICULAR CASE)
+    const VIRIDIS_PALETTE = ["#440154", "#3b528b", "#21908c","#5dc863", "#fde725"]
+
     // Layer source information
     const LAYER_INFO = {
         'tract:pctrent30_23': {
@@ -718,11 +721,11 @@
         const colorExpression = [
             'step',
             ['get', 'price'],
-            salesColors[0], // Lightest color for lowest values
-            breaks[0], salesColors[1],
-            breaks[1], salesColors[2],
-            breaks[2], salesColors[3],
-            breaks[3], salesColors[4]
+            VIRIDIS_PALETTE[0], // Darkest color for lowest values
+            breaks[0], VIRIDIS_PALETTE[1],
+            breaks[1], VIRIDIS_PALETTE[2],
+            breaks[2], VIRIDIS_PALETTE[3],
+            breaks[3], VIRIDIS_PALETTE[4]
         ];
 
         // Add source
@@ -843,11 +846,11 @@
         const colorExpression = [
             'step',
             ['get', 'price'],
-            rentalColors[0], // Lightest color for lowest values
-            breaks[0], rentalColors[1],
-            breaks[1], rentalColors[2],
-            breaks[2], rentalColors[3],
-            breaks[3], rentalColors[4]
+            VIRIDIS_PALETTE[0], // Darkest color for lowest values
+            breaks[0], VIRIDIS_PALETTE[1],
+            breaks[1], VIRIDIS_PALETTE[2],
+            breaks[2], VIRIDIS_PALETTE[3],
+            breaks[3], VIRIDIS_PALETTE[4]
         ];
 
         // Add source
@@ -966,7 +969,7 @@
             `$${Math.round(breaks[3]).toLocaleString()} or more`
         ];
 
-        salesColors.forEach((color, i) => {
+        VIRIDIS_PALETTE.forEach((color, i) => {
             const item = document.createElement('div');
             item.className = 'flex items-center gap-2';
             item.innerHTML = `
@@ -999,7 +1002,7 @@
             `$${Math.round(breaks[3])} or more`
         ];
 
-        rentalColors.forEach((color, i) => {
+        VIRIDIS_PALETTE.forEach((color, i) => {
             const item = document.createElement('div');
             item.className = 'flex items-center gap-2';
             item.innerHTML = `
