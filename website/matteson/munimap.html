@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Interactive map of Matteson, IL with census tract data, real estate listings, and demographic insights.">
+    <meta name="keywords" content="Matteson, IL, map, census data, real estate, demographics, housing, GIS">
+    <meta name="author" content="CommunityScale">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="theme-color" content="#192f5e">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://matteson.communityscale.com/">
+
+    <!-- Title -->
+    <title>Matteson, IL Map</title>
+
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CommunityScale">
+    <meta property="og:title" content="Matteson, IL Map">
+    <meta property="og:description" content="Interactive map of Matteson, IL with census tract data, real estate listings, and demographic insights.">
+    <meta property="og:url" content="https://matteson.communityscale.com/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/CommunityScale/media-kit/main/png/communityscale-social-card-black-bg.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Matteson, IL Map">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Matteson, IL Map">
+    <meta name="twitter:description" content="Interactive map of Matteson, IL with census tract data, real estate listings, and demographic insights.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/CommunityScale/media-kit/main/png/communityscale-social-card-black-bg.png">
+    <meta name="twitter:image:alt" content="Matteson, IL Map">
+    <meta name="twitter:site" content="@communityscale">
+    <meta name="twitter:creator" content="@communityscale">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://raw.githubusercontent.com/CommunityScale/media-kit/main/favicon/communityscale-favicon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://raw.githubusercontent.com/CommunityScale/media-kit/main/favicon/communityscale-favicon-512.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="https://raw.githubusercontent.com/CommunityScale/media-kit/main/favicon/communityscale-favicon-192.png">
+    <link rel="mask-icon" href="https://raw.githubusercontent.com/CommunityScale/media-kit/main/svg/communityscale-symbol-black.svg" color="#000000">
+    <meta name="msapplication-TileColor" content="#192f5e">
+
+    <!-- Performance & Preconnects -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.mapbox.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H13EFXBPKL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-H13EFXBPKL');
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WJ5WD2NX');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Mapbox GL JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+
+    <!-- Material UI icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Roboto font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        .material-icons-outlined {
+            font-size: 1.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-display: swap;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mapboxgl-popup {
+            max-width: 250px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.875rem;
+        }
+
+        .mapboxgl-popup-content {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            color: #1f2937;
+        }
+
+        .mapboxgl-popup-close-button {
+            display: none;
+        }
+
+        .popup-header {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+<div class="flex h-screen w-screen">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-80 bg-white border-r border-gray-300 shadow-xl p-4 overflow-y-auto z-10">
+        <div class="flex flex-col h-full">
+            <h2 id="map-title" class="text-xl font-semibold mb-5">Matteson, IL</h2>
+
+            <div class="overflow-y-auto flex-grow">
+                <!-- Data layer selector -->
+                <div class="mb-4 -ml-3 relative">
+                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <select id="layer-select" class="w-full bg-white rounded pl-9 pr-8 py-2 text-sm focus:outline-none appearance-none border border-gray-200">
+                        <option value="" selected>Select data layer</option>
+                        <option value="blank" hidden></option>
+                        <optgroup label="Real Estate">
+                            <option value="sales:price_per_sqft">Sales listings - Price</option>
+                            <option value="rental:price">Rental listings - Price</option>
+                        </optgroup>
+                        <optgroup label="Census Tract Data">
+                            <option value="tract:pctrent30_23">Percent of renters cost burdened (2023)</option>
+                            <option value="tract:pctowned30_23">Percent of homeowners cost burdened (2023)</option>
+                            <option value="tract:hh_change_23_20">Household change 2020-2023 (%)</option>
+                            <option value="tract:median_hh_income_23">Median household income (2023)</option>
+                            <option value="tract:commute_gt45mins_sh_23">Share of workers with commute longer than 45 min (2023)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- Legend container -->
+                <div id="legend" class="mt-4 pb-4 hidden">
+                    <h3 id="legend-title" class="font-medium mb-2 text-black"></h3>
+                    <div id="legend-content" class="space-y-1 text-sm text-black mb-2">
+                    </div>
+                    <button id="layer-info" class="flex items-center text-sm text-black hover:text-gray-700 mt-4">
+                        <span class="material-icons text-base mr-1">info</span>
+                        About this layer
+                    </button>
+                    <div id="layer-description" class="mt-1 text-xs text-black leading-snug hidden">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basemap toggle section -->
+            <div id="basemap-wrapper" class="border-t border-gray-300 w-full pt-3">
+                <button
+                    id="basemap-toggle"
+                    class="w-full pl-0 pr-2 py-2 flex items-center justify-between bg-white hover:bg-gray-100 text-sm font-medium rounded"
+                >
+                    <span class="flex items-center gap-1">
+                        <span class="material-icons align-text-bottom">map</span>
+                        Basemap
+                    </span>
+                    <svg id="basemap-arrow" class="w-4 h-4 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Basemap options -->
+                <div id="basemap-settings" class="hidden mt-2 space-y-3 text-sm text-black">
+                    <div id="basemap-style-thumbnails" class="flex gap-2" style="font-family: 'Roboto', sans-serif;">
+                        <button data-style="gray" class="flex-1 border border-white rounded p-1 hover:border-gray-400">
+                            <div class="aspect-video bg-gray-100 rounded text-xs flex items-center justify-center">Gray</div>
+                        </button>
+                        <button data-style="satellite" class="flex-1 border border-white rounded p-1 hover:border-gray-400">
+                            <div class="aspect-video bg-gray-100 rounded text-xs flex items-center justify-center">Aerial</div>
+                        </button>
+                        <button data-style="lightSatellite" class="flex-1 border border-white rounded p-1 hover:border-gray-400">
+                            <div class="aspect-video bg-gray-100 rounded text-xs flex flex-col items-center justify-center leading-tight">
+                                <span>Light</span>
+                                <span>Aerial</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Scale Logo -->
+            <div class="border-t border-gray-300 w-full pt-3 mt-3">
+                <a href="https://communityscale.io" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:opacity-75 transition-opacity">
+                    <div class="bg-black rounded p-1.5 shadow-sm">
+                        <img src="https://communityscale.io/wp-content/uploads/2024/01/white-on-black-with-edges-150x150.png"
+                             alt="CommunityScale logo"
+                             class="h-6 w-6">
+                    </div>
+                    <span class="font-bold text-black" style="font-family: 'Roboto Condensed', sans-serif;">CommunityScale</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map container -->
+    <div id="map" class="flex-grow relative">
+    </div>
+</div>
+
+<script>
+    // ============================================
+    // CONFIGURATION
+    // ============================================
+
+    // Cook County, IL
+    const COUNTIES = [
+        {
+            name: 'Cook County',
+            geoid: '17031',
+            bounds: [[-88.2, 41.6], [-87.5, 42.3]]
+        }
+    ];
+    const REGION_NAME = 'Matteson, IL';
+    const STATE_NAME = 'Illinois';
+
+    const COUNTY_GEOID = COUNTIES[0].geoid;
+
+    // Custom initial map view
+    const CUSTOM_CENTER = null;
+    const CUSTOM_ZOOM = null;
+
+    // Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY29tbXVuaXR5c2NhbGUiLCJhIjoiY21hZ3Y4azlmMDU5YTJqb2NqbzRsa3psbSJ9.eJlBVHcMSB88Czl3ti2i5g';
+
+    // Basemap styles
+    const BASEMAP_STYLES = {
+        gray: 'mapbox://styles/communityscale/cmcuwuwcv00xz01s1gn7xccqi',
+        satellite: 'mapbox://styles/communityscale/cmgidsjne002c01qne3nf930s',
+        lightSatellite: 'mapbox://styles/communityscale/cmgidu19b00n301sb0jcihsuk'
+    };
+
+    // Tileset IDs
+    const TILESETS = {
+        counties: 'communityscale.counties',
+        tracts: 'communityscale.tracts-2020',
+        municipality: 'communityscale.municipality'
+    };
+
+    // Data file URLs
+    const DATA_FILES = {
+        tracts: 'https://raw.githubusercontent.com/CommunityScale/public/refs/heads/main/data/US/USA_CTs_251222.json',
+        zips: 'https://raw.githubusercontent.com/CommunityScale/public/refs/heads/main/data/US/USA_zips_251222.json',
+        salesListings: 'sales_listings.csv',
+        rentalListings: 'rental_listings.csv'
+    };
+
+    // Color palette (darkest to lightest, darkest = highest values)
+    const COLOR_PALETTE = ['#192f5e', '#3445b0', '#6e79dd', '#8795eb', '#adbfff', '#c2d8ff'];
+
+    //viridis color palette (to improve legibility for listings info for Brian/Dorset client; darkest to lightest, darkest = lowest value IN THIS PARTICULAR CASE)
+    const VIRIDIS_PALETTE = ["#440154", "#3b528b", "#21908c","#5dc863", "#fde725"]
+
+    // Layer source information
+    const LAYER_INFO = {
+        'tract:pctrent30_23': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)',
+            description: 'Percentage of renter-occupied households that are spending 30% or more of their monthly income on housing costs.'
+        },
+        'tract:pctowned30_23': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)',
+            description: 'Percentage of owner-occupied households that are spending 30% or more of their monthly income on housing costs.'
+        },
+        'tract:total_cb_rt_23': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)',
+            description: 'Percentage of all households (renters and owners) that are spending 30% or more of their monthly income on housing costs.'
+        },
+        'tract:hh_change_23_20': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates'
+        },
+        'tract:median_hh_income_23': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)'
+        },
+        'tract:commute_gt45mins_sh_23': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)',
+            description: 'Percentage of workers with a commute time longer than 45 minutes.'
+        }
+    };
+
+    // Data storage
+    let tractData = null; // Will store the JSON attribute data
+    let tractDataLookup = {}; // Lookup object for joining data by GEOID
+    let salesListingsData = null; // Will store the parsed CSV data
+    let rentalListingsData = null; // Will store the parsed CSV data
+    let currentDataLayer = null;
+    let currentLayerName = null;
+
+    // Initialize map
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: BASEMAP_STYLES.gray,
+        center: CUSTOM_CENTER || [-87.75, 41.5],
+        zoom: CUSTOM_ZOOM || 9
+    });
+
+    // Map load handler
+    map.on('load', () => {
+        console.log('Map loaded');
+
+        // Add municipality outline
+        map.addSource('municipality-source', {
+            type: 'vector',
+            url: `mapbox://${TILESETS.municipality}`
+        });
+
+        map.addLayer({
+            id: 'municipality-outline',
+            type: 'line',
+            source: 'municipality-source',
+            'source-layer': 'geos',
+            paint: {
+                'line-color': '#000000',
+                'line-width': 2
+            },
+            filter: ['==', ['get', 'name'], 'Matteson, IL']
+        });
+
+        // Add census tracts vector tileset (for geometry)
+        map.addSource('tracts-source', {
+            type: 'vector',
+            url: `mapbox://${TILESETS.tracts}`
+        });
+
+        // Load census tract attribute data from JSON
+        fetch(DATA_FILES.tracts)
+            .then(response => response.json())
+            .then(data => {
+                // Filter to only state of Illinois (FIPS 17)
+                const stateFIPS = COUNTY_GEOID.substring(0, 2);
+                tractData = data.filter(d => d.geoid && d.geoid.startsWith(stateFIPS));
+
+                console.log('Tract attribute data loaded from JSON');
+
+                // Create lookup object for joining data by GEOID
+                tractData.forEach(item => {
+                    const geoid = item.geoid || item.GEOID;
+                    if (geoid) {
+                        tractDataLookup[geoid] = item;
+                    }
+                });
+
+                console.log(`Loaded ${tractData.length} tract records for state ${stateFIPS}`);
+                console.log(`Lookup has ${Object.keys(tractDataLookup).length} entries`);
+            })
+            .catch(error => console.error('Error loading tract attribute data:', error));
+
+        // Load sales listings data from CSV
+        fetch(DATA_FILES.salesListings)
+            .then(response => response.text())
+            .then(csvText => {
+                salesListingsData = parseCSV(csvText);
+                console.log(`Loaded ${salesListingsData.length} sales listings`);
+            })
+            .catch(error => console.error('Error loading sales listings:', error));
+
+        // Load rental listings data from CSV
+        fetch(DATA_FILES.rentalListings)
+            .then(response => response.text())
+            .then(csvText => {
+                rentalListingsData = parseCSV(csvText);
+                console.log(`Loaded ${rentalListingsData.length} rental listings`);
+            })
+            .catch(error => console.error('Error loading rental listings:', error));
+
+        // Fit map to Matteson municipality bounds
+        // Wait for the source to load, then query features and fit bounds
+        const fitToMattesonBounds = (e) => {
+            if (e.sourceId === 'municipality-source' && e.isSourceLoaded) {
+                const features = map.querySourceFeatures('municipality-source', {
+                    sourceLayer: 'geos',
+                    filter: ['==', ['get', 'name'], 'Matteson, IL']
+                });
+
+                if (features.length > 0) {
+                    const bounds = new mapboxgl.LngLatBounds();
+                    features.forEach(feature => {
+                        if (feature.geometry.type === 'Polygon') {
+                            feature.geometry.coordinates[0].forEach(coord => {
+                                bounds.extend(coord);
+                            });
+                        } else if (feature.geometry.type === 'MultiPolygon') {
+                            feature.geometry.coordinates.forEach(polygon => {
+                                polygon[0].forEach(coord => {
+                                    bounds.extend(coord);
+                                });
+                            });
+                        }
+                    });
+                    map.fitBounds(bounds, { padding: 50 });
+                    // Remove this listener after first use
+                    map.off('sourcedata', fitToDorsetBounds);
+                }
+            }
+        };
+        map.on('sourcedata', fitToDorsetBounds);
+    });
+
+    // Proper CSV parser that handles quoted fields with commas
+    function parseCSV(csvText) {
+        const lines = csvText.trim().split(/\r?\n/);
+
+        // Parse headers
+        const headers = parseCSVLine(lines[0]);
+        console.log('CSV Headers:', headers);
+
+        const data = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = parseCSVLine(lines[i]);
+            const row = {};
+
+            headers.forEach((header, index) => {
+                let value = values[index] || '';
+
+                // Convert to number ONLY if the entire string is numeric
+                if (value === 'NA' || value === '') {
+                    row[header] = null;
+                } else if (/^-?\d+\.?\d*$/.test(value)) {
+                    // Only convert if it's entirely numeric
+                    row[header] = parseFloat(value);
+                } else {
+                    // Keep as string
+                    row[header] = value;
+                }
+            });
+            data.push(row);
+        }
+
+        // Log first row for debugging
+        if (data.length > 0) {
+            console.log('First parsed row:', data[0]);
+        }
+
+        return data;
+    }
+
+    // Parse a CSV line properly handling quoted fields with commas
+    function parseCSVLine(line) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+
+            if (char === '"') {
+                // Toggle quote state but don't add quote to output
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                // Field separator - push current field and reset
+                result.push(current);
+                current = '';
+            } else {
+                // Regular character - add to current field
+                current += char;
+            }
+        }
+        // Don't forget the last field
+        result.push(current);
+
+        return result;
+    }
+
+    // Layer selection handler
+    document.getElementById('layer-select').addEventListener('change', (e) => {
+        const layerId = e.target.value;
+
+        if (layerId === '' || layerId === 'blank') {
+            clearCurrentLayer();
+            return;
+        }
+
+        // Handle sales layers
+        if (layerId.startsWith('sales:')) {
+            const field = layerId.split(':')[1];
+            displaySalesLayer(field);
+        }
+        // Handle rental layers
+        else if (layerId.startsWith('rental:')) {
+            const field = layerId.split(':')[1];
+            displayRentalLayer(field);
+        }
+        // Handle tract layers
+        else if (layerId.startsWith('tract:')) {
+            const field = layerId.split(':')[1];
+            displayTractLayer(field);
+        }
+    });
+
+    // Clear current layer
+    function clearCurrentLayer() {
+        if (currentDataLayer) {
+            if (map.getLayer(currentDataLayer)) {
+                map.removeLayer(currentDataLayer);
+            }
+            if (map.getSource(currentDataLayer + '-source')) {
+                map.removeSource(currentDataLayer + '-source');
+            }
+        }
+        currentDataLayer = null;
+        currentLayerName = null;
+        document.getElementById('legend').classList.add('hidden');
+    }
+
+    // Display tract layer
+    function displayTractLayer(field) {
+        clearCurrentLayer();
+
+        if (!tractData || Object.keys(tractDataLookup).length === 0) {
+            console.error('Tract attribute data not loaded yet');
+            return;
+        }
+
+        const layerId = `tract-${field}`;
+        currentDataLayer = layerId;
+        currentLayerName = `tract:${field}`;
+
+        // Extract field values from the lookup data
+        const values = Object.values(tractDataLookup)
+            .map(props => props[field])
+            .filter(v => v != null && !isNaN(v));
+
+        if (values.length === 0) {
+            console.error(`Field ${field} not found or has no valid values in attribute data`);
+            return;
+        }
+
+        // Calculate quantile breaks
+        const breaks = calculateQuantileBreaks(values, 6);
+
+        // Group tracts into color buckets based on their data values
+        const colorBuckets = [[], [], [], [], [], []]; // 6 buckets for 6 colors
+        const validTractGEOIDs = [];
+
+        Object.entries(tractDataLookup).forEach(([geoid, properties]) => {
+            const value = properties[field];
+            if (value != null && !isNaN(value)) {
+                validTractGEOIDs.push(geoid);
+
+                // Determine which bucket this value falls into
+                let bucketIndex = 5; // Default to lightest color
+                if (value >= breaks[4]) bucketIndex = 0;
+                else if (value >= breaks[3]) bucketIndex = 1;
+                else if (value >= breaks[2]) bucketIndex = 2;
+                else if (value >= breaks[1]) bucketIndex = 3;
+                else if (value >= breaks[0]) bucketIndex = 4;
+
+                colorBuckets[bucketIndex].push(geoid);
+            }
+        });
+
+        // Build match expression that maps GEOID directly to color
+        const fillExpression = ['match', ['get', 'GEOID']];
+        colorBuckets.forEach((geoids, index) => {
+            geoids.forEach(geoid => {
+                fillExpression.push(geoid);
+                fillExpression.push(COLOR_PALETTE[index]);
+            });
+        });
+        fillExpression.push('rgba(0,0,0,0)'); // Default transparent for tracts without data
+
+        // Create filter to only show tracts with data
+        const matchFilter = ['match', ['get', 'GEOID'], validTractGEOIDs, true, false];
+
+        console.log(`Creating layer with ${validTractGEOIDs.length} tracts in color buckets: ${colorBuckets.map(b => b.length).join(', ')}`);
+
+        // Create the fill layer with data-driven styling
+        map.addLayer({
+            id: layerId,
+            type: 'fill',
+            source: 'tracts-source',
+            'source-layer': 'tracts',
+            paint: {
+                'fill-color': fillExpression,
+                'fill-opacity': 0.7
+            },
+            filter: matchFilter
+        }, 'municipality-outline');
+
+        // Update legend
+        updateLegend(field, breaks);
+
+        // Add click handler for popup
+        map.on('click', layerId, (e) => {
+            const feature = e.features[0];
+            const geoid = feature.properties.GEOID || feature.properties.geoid || feature.id;
+            const tractProperties = tractDataLookup[geoid];
+            const value = tractProperties ? tractProperties[field] : null;
+
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div class="popup-header">Census Tract ${feature.properties.name || geoid}</div>
+                    <div>${getFieldLabel(field)}: ${formatValue(field, value)}</div>
+                `)
+                .addTo(map);
+        });
+
+        // Change cursor on hover
+        map.on('mouseenter', layerId, () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, () => {
+            map.getCanvas().style.cursor = '';
+        });
+    }
+
+    // Display sales layer
+    function displaySalesLayer(field) {
+        clearCurrentLayer();
+
+        if (!salesListingsData) {
+            console.error('Sales listings data not loaded yet');
+            return;
+        }
+
+        const layerId = `sales-${field}`;
+        currentDataLayer = layerId;
+        currentLayerName = `sales:${field}`;
+
+        // Convert to GeoJSON with price per square foot calculation
+        const features = salesListingsData
+            .filter(listing => {
+                return listing.latitude && listing.longitude &&
+                       listing.price && listing.squareFootage &&
+                       listing.squareFootage > 0;
+            })
+            .map((listing, index) => {
+                const pricePerSqFt = listing.price / listing.squareFootage;
+
+                // Build full address
+                let fullAddress = listing.formattedAddress;
+                if (!fullAddress) {
+                    fullAddress = listing.addressLine1;
+                    if (listing.addressLine2) fullAddress += ', ' + listing.addressLine2;
+                    if (listing.city) fullAddress += ', ' + listing.city;
+                    if (listing.state) fullAddress += ', ' + listing.state;
+                    if (listing.zipCode) fullAddress += ' ' + listing.zipCode;
+                }
+
+                // Debug first few addresses
+                if (index < 3) {
+                    console.log(`Listing ${index}:`, {
+                        formattedAddress: listing.formattedAddress,
+                        addressLine1: listing.addressLine1,
+                        fullAddress: fullAddress
+                    });
+                }
+
+                return {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [listing.longitude, listing.latitude]
+                    },
+                    properties: {
+                        fullAddress: fullAddress,
+                        price: listing.price,
+                        squareFootage: listing.squareFootage,
+                        pricePerSqFt: pricePerSqFt,
+                        bedrooms: listing.bedrooms,
+                        bathrooms: listing.bathrooms,
+                        status: listing.status
+                    }
+                };
+            });
+
+        const geojson = {
+            type: 'FeatureCollection',
+            features: features
+        };
+
+        console.log(`Creating sales layer with ${features.length} listings`);
+
+        // Extract price values for quantile calculation
+        const values = features.map(f => f.properties.price);
+
+        // Calculate 5 quantile breaks
+        const breaks = calculateQuantileBreaks(values, 5);
+
+        // Use 5 colors from the palette (lightest to darkest for low to high)
+        const salesColors = ['#e4e0fc', '#adbfff', '#6e79dd', '#3445b0', '#192f5e'];
+
+        // Create color expression for circle-color
+        const colorExpression = [
+            'step',
+            ['get', 'price'],
+            VIRIDIS_PALETTE[0], // Darkest color for lowest values
+            breaks[0], VIRIDIS_PALETTE[1],
+            breaks[1], VIRIDIS_PALETTE[2],
+            breaks[2], VIRIDIS_PALETTE[3],
+            breaks[3], VIRIDIS_PALETTE[4]
+        ];
+
+        // Add source
+        map.addSource(layerId + '-source', {
+            type: 'geojson',
+            data: geojson
+        });
+
+        // Add circle layer
+        map.addLayer({
+            id: layerId,
+            type: 'circle',
+            source: layerId + '-source',
+            paint: {
+                'circle-radius': 6,
+                'circle-color': colorExpression,
+                'circle-stroke-color': '#ffffff',
+                'circle-stroke-width': 1,
+                'circle-opacity': 1
+            }
+        });
+
+        // Update legend for sales layer
+        updateSalesLegend(breaks);
+
+        // Add click handler for popup
+        map.on('click', layerId, (e) => {
+            const feature = e.features[0];
+            const props = feature.properties;
+
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div class="popup-header">${props.fullAddress}</div>
+                    <div><strong>Price:</strong> $${props.price.toLocaleString()}</div>
+                    <div><strong>Square footage:</strong> ${props.squareFootage.toLocaleString()} sq ft</div>
+                    <div><strong>Price per sq ft:</strong> $${Math.round(props.pricePerSqFt)}</div>
+                    <div><strong>Bedrooms:</strong> ${props.bedrooms || 'N/A'}</div>
+                    <div><strong>Bathrooms:</strong> ${props.bathrooms || 'N/A'}</div>
+                    <div><strong>Status:</strong> ${props.status}</div>
+                `)
+                .addTo(map);
+        });
+
+        // Change cursor on hover
+        map.on('mouseenter', layerId, () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, () => {
+            map.getCanvas().style.cursor = '';
+        });
+    }
+
+    // Display rental layer
+    function displayRentalLayer(field) {
+        clearCurrentLayer();
+
+        if (!rentalListingsData) {
+            console.error('Rental listings data not loaded yet');
+            return;
+        }
+
+        const layerId = `rental-${field}`;
+        currentDataLayer = layerId;
+        currentLayerName = `rental:${field}`;
+
+        // Convert to GeoJSON
+        const features = rentalListingsData
+            .filter(listing => {
+                return listing.latitude && listing.longitude && listing.price;
+            })
+            .map(listing => {
+                // Build full address
+                let fullAddress = listing.formattedAddress;
+                if (!fullAddress) {
+                    fullAddress = listing.addressLine1;
+                    if (listing.addressLine2) fullAddress += ', ' + listing.addressLine2;
+                    if (listing.city) fullAddress += ', ' + listing.city;
+                    if (listing.state) fullAddress += ', ' + listing.state;
+                    if (listing.zipCode) fullAddress += ' ' + listing.zipCode;
+                }
+
+                return {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [listing.longitude, listing.latitude]
+                    },
+                    properties: {
+                        fullAddress: fullAddress,
+                        price: listing.price,
+                        squareFootage: listing.squareFootage,
+                        bedrooms: listing.bedrooms,
+                        bathrooms: listing.bathrooms,
+                        status: listing.status
+                    }
+                };
+            });
+
+        const geojson = {
+            type: 'FeatureCollection',
+            features: features
+        };
+
+        console.log(`Creating rental layer with ${features.length} listings`);
+
+        // Extract price values for quantile calculation
+        const values = features.map(f => f.properties.price);
+
+        // Calculate 5 quantile breaks
+        const breaks = calculateQuantileBreaks(values, 5);
+
+        // Use 5 colors from the palette (lightest to darkest for low to high)
+        const rentalColors = ['#e4e0fc', '#adbfff', '#6e79dd', '#3445b0', '#192f5e'];
+
+        // Create color expression for circle-color
+        const colorExpression = [
+            'step',
+            ['get', 'price'],
+            VIRIDIS_PALETTE[0], // Darkest color for lowest values
+            breaks[0], VIRIDIS_PALETTE[1],
+            breaks[1], VIRIDIS_PALETTE[2],
+            breaks[2], VIRIDIS_PALETTE[3],
+            breaks[3], VIRIDIS_PALETTE[4]
+        ];
+
+        // Add source
+        map.addSource(layerId + '-source', {
+            type: 'geojson',
+            data: geojson
+        });
+
+        // Add circle layer
+        map.addLayer({
+            id: layerId,
+            type: 'circle',
+            source: layerId + '-source',
+            paint: {
+                'circle-radius': 6,
+                'circle-color': colorExpression,
+                'circle-stroke-color': '#ffffff',
+                'circle-stroke-width': 1,
+                'circle-opacity': 1
+            }
+        });
+
+        // Update legend for rental layer
+        updateRentalLegend(breaks);
+
+        // Add click handler for popup
+        map.on('click', layerId, (e) => {
+            const feature = e.features[0];
+            const props = feature.properties;
+
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div class="popup-header">${props.fullAddress}</div>
+                    <div><strong>Price:</strong> $${props.price.toLocaleString()}</div>
+                    ${props.squareFootage ? `<div><strong>Square footage:</strong> ${props.squareFootage.toLocaleString()} sq ft</div>` : ''}
+                    <div><strong>Bedrooms:</strong> ${props.bedrooms || 'N/A'}</div>
+                    <div><strong>Bathrooms:</strong> ${props.bathrooms || 'N/A'}</div>
+                    <div><strong>Status:</strong> ${props.status}</div>
+                `)
+                .addTo(map);
+        });
+
+        // Change cursor on hover
+        map.on('mouseenter', layerId, () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, () => {
+            map.getCanvas().style.cursor = '';
+        });
+    }
+
+    // Calculate quantile breaks
+    function calculateQuantileBreaks(values, numBreaks) {
+        const sorted = values.filter(v => v != null).sort((a, b) => a - b);
+        const breaks = [];
+        const step = sorted.length / numBreaks;
+
+        for (let i = 1; i < numBreaks; i++) {
+            const index = Math.floor(i * step);
+            breaks.push(sorted[index]);
+        }
+
+        return breaks;
+    }
+
+    // Update legend
+    function updateLegend(field, breaks) {
+        const legendTitle = getFieldLabel(field);
+        const legendContent = document.getElementById('legend-content');
+
+        document.getElementById('legend-title').textContent = legendTitle;
+        legendContent.innerHTML = '';
+
+        // Add legend items
+        const labels = [
+            `${formatValue(field, breaks[4])} or more`,
+            `${formatValue(field, breaks[3])} - ${formatValue(field, breaks[4])}`,
+            `${formatValue(field, breaks[2])} - ${formatValue(field, breaks[3])}`,
+            `${formatValue(field, breaks[1])} - ${formatValue(field, breaks[2])}`,
+            `${formatValue(field, breaks[0])} - ${formatValue(field, breaks[1])}`,
+            `${formatValue(field, breaks[0])} or less`
+        ];
+
+        COLOR_PALETTE.forEach((color, i) => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded" style="background-color: ${color}"></div>
+                <span>${labels[i]}</span>
+            `;
+            legendContent.appendChild(item);
+        });
+
+        document.getElementById('legend').classList.remove('hidden');
+    }
+
+    // Update legend for sales layer
+    function updateSalesLegend(breaks) {
+        const legendTitle = 'Sales price';
+        const legendContent = document.getElementById('legend-content');
+
+        document.getElementById('legend-title').textContent = legendTitle;
+        legendContent.innerHTML = '';
+
+        // Use 5 colors (lightest to darkest for low to high)
+        const salesColors = ['#e4e0fc', '#adbfff', '#6e79dd', '#3445b0', '#192f5e'];
+
+        // Create labels for 5 quantiles
+        const labels = [
+            `$${Math.round(breaks[0]).toLocaleString()} or less`,
+            `$${Math.round(breaks[0]).toLocaleString()} - $${Math.round(breaks[1]).toLocaleString()}`,
+            `$${Math.round(breaks[1]).toLocaleString()} - $${Math.round(breaks[2]).toLocaleString()}`,
+            `$${Math.round(breaks[2]).toLocaleString()} - $${Math.round(breaks[3]).toLocaleString()}`,
+            `$${Math.round(breaks[3]).toLocaleString()} or more`
+        ];
+
+        VIRIDIS_PALETTE.forEach((color, i) => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded-full border border-white" style="background-color: ${color}"></div>
+                <span>${labels[i]}</span>
+            `;
+            legendContent.appendChild(item);
+        });
+
+        document.getElementById('legend').classList.remove('hidden');
+    }
+
+    // Update legend for rental layer
+    function updateRentalLegend(breaks) {
+        const legendTitle = 'Rental price';
+        const legendContent = document.getElementById('legend-content');
+
+        document.getElementById('legend-title').textContent = legendTitle;
+        legendContent.innerHTML = '';
+
+        // Use 5 colors (lightest to darkest for low to high)
+        const rentalColors = ['#e4e0fc', '#adbfff', '#6e79dd', '#3445b0', '#192f5e'];
+
+        // Create labels for 5 quantiles
+        const labels = [
+            `$${Math.round(breaks[0])} or less`,
+            `$${Math.round(breaks[0])} - $${Math.round(breaks[1])}`,
+            `$${Math.round(breaks[1])} - $${Math.round(breaks[2])}`,
+            `$${Math.round(breaks[2])} - $${Math.round(breaks[3])}`,
+            `$${Math.round(breaks[3])} or more`
+        ];
+
+        VIRIDIS_PALETTE.forEach((color, i) => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded-full border border-white" style="background-color: ${color}"></div>
+                <span>${labels[i]}</span>
+            `;
+            legendContent.appendChild(item);
+        });
+
+        document.getElementById('legend').classList.remove('hidden');
+    }
+
+    // Get field label
+    function getFieldLabel(field) {
+        const labels = {
+            'pctrent30_23': 'Percent of renters cost burdened (2023)',
+            'pctowned30_23': 'Percent of homeowners cost burdened (2023)',
+            'total_cb_rt_23': 'Total cost burden rate (2023)',
+            'hh_change_23_20': 'Household change 2020-2023 (%)',
+            'median_hh_income_23': 'Median household income (2023)',
+            'commute_gt45mins_sh_23': 'Share of workers with commute longer than 45 min (2023)'
+        };
+        return labels[field] || field;
+    }
+
+    // Format value
+    function formatValue(field, value) {
+        if (value == null) return 'N/A';
+
+        if (field.includes('pct') || field.includes('sh_') || field.includes('rate') || field.includes('change')) {
+            const percentage = value * 100;
+            // Use 1 decimal place if the value rounds to 0, otherwise round to whole number
+            if (Math.round(percentage) === 0 && percentage > 0) {
+                return `${percentage.toFixed(1)}%`;
+            }
+            return `${Math.round(percentage)}%`;
+        } else if (field.includes('income')) {
+            return `$${Math.round(value).toLocaleString()}`;
+        }
+
+        return Math.round(value).toLocaleString();
+    }
+
+    // Layer info toggle
+    document.getElementById('layer-info').addEventListener('click', () => {
+        const description = document.getElementById('layer-description');
+        const info = LAYER_INFO[currentLayerName];
+
+        if (description.classList.contains('hidden')) {
+            if (info) {
+                description.innerHTML = `<strong>Source:</strong> ${info.source}${info.description ? '<br><br>' + info.description : ''}`;
+            }
+            description.classList.remove('hidden');
+        } else {
+            description.classList.add('hidden');
+        }
+    });
+
+    // Basemap toggle
+    document.getElementById('basemap-toggle').addEventListener('click', () => {
+        const settings = document.getElementById('basemap-settings');
+        const arrow = document.getElementById('basemap-arrow');
+
+        settings.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    });
+
+    // Basemap style selection
+    document.querySelectorAll('#basemap-style-thumbnails button').forEach(button => {
+        button.addEventListener('click', () => {
+            const style = button.dataset.style;
+            map.setStyle(BASEMAP_STYLES[style]);
+
+            // Re-add layers after style change
+            map.once('styledata', () => {
+                // Re-add municipality outline
+                map.addSource('municipality-source', {
+                    type: 'vector',
+                    url: `mapbox://${TILESETS.municipality}`
+                });
+
+                map.addLayer({
+                    id: 'municipality-outline',
+                    type: 'line',
+                    source: 'municipality-source',
+                    'source-layer': 'geos',
+                    paint: {
+                        'line-color': '#000000',
+                        'line-width': 2
+                    },
+                    filter: ['==', ['get', 'name'], 'Dorset, VT']
+                });
+
+                // Re-add tracts vector tileset
+                map.addSource('tracts-source', {
+                    type: 'vector',
+                    url: `mapbox://${TILESETS.tracts}`
+                });
+
+                // Re-display current layer if any
+                if (currentDataLayer) {
+                    if (currentDataLayer.startsWith('tract-') && tractData) {
+                        const field = currentDataLayer.replace('tract-', '');
+                        displayTractLayer(field);
+                    } else if (currentDataLayer.startsWith('sales-') && salesListingsData) {
+                        const field = currentDataLayer.replace('sales-', '');
+                        displaySalesLayer(field);
+                    } else if (currentDataLayer.startsWith('rental-') && rentalListingsData) {
+                        const field = currentDataLayer.replace('rental-', '');
+                        displayRentalLayer(field);
+                    }
+                }
+            });
+
+            // Update selected style
+            document.querySelectorAll('#basemap-style-thumbnails button').forEach(btn => {
+                btn.classList.remove('border-gray-400');
+                btn.classList.add('border-white');
+            });
+            button.classList.remove('border-white');
+            button.classList.add('border-gray-400');
+        });
+    });
+
+</script>
+
+</body>
+</html>
