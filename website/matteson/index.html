@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ========================================
+       META TAGS
+       ======================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modern dashboard interface for data visualization and analytics. Clean, responsive design with real-time insights and comprehensive reporting tools.">
+  <meta name="keywords" content="dashboard, analytics, data visualization, business intelligence, reporting, charts, metrics">
+  <meta name="author" content="Matteson Housing Study Dashboard">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+  <meta name="theme-color" content="#3B82F6">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://matteson.communityscale.com/">
+
+  <title>Matteson Housing Study Dashboard</title>
+
+  <!-- OpenGraph Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Matteson Housing Study Dashboard">
+  <meta property="og:title" content="Matteson Housing Study Dashboard">
+  <meta property="og:description" content="Professional dashboard interface for data visualization and analytics. Real-time insights with intuitive design.">
+  <meta property="og:url" content="http://communityscale.com/wp-content/uploads/2025/09/CommunityScaleSocialCardLogo.jpg">
+  <meta property="og:image" content="http://communityscale.com/wp-content/uploads/2025/09/CommunityScaleSocialCardLogo.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Matteson Housing Study">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Matteson Housing Study Dashboard">
+  <meta name="twitter:description" content="Professional dashboard interface for data visualization and analytics. Real-time insights with intuitive design.">
+  <meta name="twitter:image" content="http://communityscale.com/wp-content/uploads/2025/09/CommunityScaleSocialCardLogo.jpg">
+  <meta name="twitter:image:alt" content="Matteson Housing Study Dashboard">
+  <meta name="twitter:site" content="@communityscale">
+  <meta name="twitter:creator" content="@communityscale">
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+
+  <!-- Performance & Caching -->
+  <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3B82F6">
+  <meta name="msapplication-TileColor" content="#3B82F6">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+
+  <!-- ========================================
+       ANALYTICS
+       ======================================== -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID', {
+      page_title: 'Dashboard',
+      page_location: window.location.href,
+      send_page_view: true,
+      anonymize_ip: true,
+      allow_google_signals: false,
+      cookie_flags: 'SameSite=Strict;Secure'
+    });
+  </script>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Matteson Housing Study Dashboard",
+    "description": "Housing forecast and housing needs assessment for Matteson, IL",
+    "url": "https://matteson.communityscale.com/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "CommunityScale",
+      "url": "https://matteson.communityscale.com/"
+    }
+  }
+  </script>
+
+  <!-- ========================================
+       STYLESHEETS & FONTS
+       ======================================== -->
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Roboto', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- ========================================
+       CUSTOM STYLES
+       ======================================== -->
+  <style>
+    /* ===== Performance & UX ===== */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      font-display: swap;
+    }
+
+    /* ===== Material Icons Sizing ===== */
+    .material-icons-outlined {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    /* ===== Datawrapper Iframe Responsiveness ===== */
+    iframe[id^="datawrapper-chart"] {
+      width: 0;
+      min-width: 100% !important;
+      border: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- ========================================
+       HEADER & NAVIGATION
+       ======================================== -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8" aria-label="Global">
+      <!-- Logo & Title -->
+      <div class="flex lg:flex-1">
+        <a href="https://www.villageofmatteson.org/" class="-m-1.5 p-1.5">
+          <span class="sr-only">Matteson Housing Needs and Workforce Housing Assessment</span>
+          <img class="h-8 w-auto" src="images/logo.png" alt="town logo" />
+        </a>
+        <h1 class="hidden lg:block ml-4 text-xl font-bold text-gray-900 self-center">
+          Matteson Housing Needs and Workforce Housing Assessment
+        </h1>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex lg:gap-x-6">
+        <a href="#" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
+          <span class="material-icons-outlined text-sm">arrow_upward_alt</span>
+          Top
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex lg:hidden">
+        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
+          <span class="sr-only">Open main menu</span>
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 z-50"></div>
+      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div class="flex items-center gap-x-6">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">CommunityScale</span>
+            <img class="h-8 w-auto" src="cslogo.svg" alt="" />
+          </a>
+          <a href="#" class="ml-auto rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 whitespace-nowrap">
+            Sign up
+          </a>
+          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
+            <span class="sr-only">Close menu</span>
+            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6">
+              <!-- Mobile navigation links go here -->
+            </div>
+            <div class="py-6">
+              <!-- Mobile search -->
+              <div class="relative mb-4">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <input type="search" placeholder="Search..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================
+       HERO SECTION
+       ======================================== -->
+  <div class="relative border-t border-b border-gray-200 pt-20 pb-20 bg-white overflow-hidden">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('images/apts.jpg')">
+      <div class="absolute inset-0 bg-gradient-to-r from-white/90 to-white/70"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="sm:mx-auto sm:max-w-3xl px-4 sm:px-6">
+        <h1 class="text-2xl md:text-3xl lg:text-3xl text-gray-900 mb-6 leading-tight">
+          <span class="font-light tracking-wide">Matteson, IL</span><br>
+          <span class="font-bold">Housing Needs and Workforce Housing Assessment</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+          This dashboard supports Matteson's Housing Needs and Workforce Housing Assessment, conducted by the 
+          <a href="https://www.villageofmatteson.org/" target="_blank" class="text-gray-700 hover:underline">Village of Matteson</a> 
+          and <a href="https://communityscale.io/" target="_blank" class="text-gray-700 hover:underline">CommunityScale</a>.
+        </p>
+        <br>
+        <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+          This dashboard will be periodically updated with additional information drawn from ongoing analysis, stakeholder engagement, and draft recommendations.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MAIN CONTENT
+       ======================================== -->
+  <main class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 space-y-6">
+
+    <!-- About this Study Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">About this Study</h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              This housing needs and workforce housing assessment will provide  insights, strategic recommendations, and actionable implementation strategies to address current and future housing needs in Matteson, in coordination with the Comprehensive Plan.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <img src="images/townhome.png" width="100%" class="rounded-lg">
+          </div>
+        </div>
+        
+        <!-- Study Goals -->
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Study goals:</h3>
+          <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+            <!-- Goal 1 -->
+            <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
+              <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </dt>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Evaluate housing and demographics to understand housing need and demand, and set a preliminary production target.
+              </dd>
+            </div>
+            
+            <!-- Goal 2 -->
+            <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
+              <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </dt>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Analyze workforce housing needs and costs for the workforce and missing middle housing potential.
+              </dd>
+            </div>
+            
+            <!-- Goal 3 -->
+            <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
+              <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </dt>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Assess local zoning and regulatory barriers to housing and market development feasibility.
+              </dd>
+            </div>
+            
+            <!-- Goal 4 -->
+            <div class="group overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800/75 dark:inset-ring dark:inset-ring-white/10 hover:bg-gray-800 transition-all duration-200 transform hover:scale-105">
+              <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:stroke-white transition-colors duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </dt>
+              <dd class="mt-1 text-1xl font-semibold tracking-tight text-gray-900 dark:text-white group-hover:text-white transition-colors duration-200">
+                Identify policy tools and interventions to address identified housing needs and market opportunities.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- Population card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">Matteson's population is declining, but migration could reverse the trend.</h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              For the past 5 years, Matteson has been losing households, with seniors making up a larger percentage of the population.
+            </p>
+            <p class="text-gray-700 pb-2">
+              However, the region at large is growing. If Matteson can capture some of this regional growth, the population trend could reverse.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Matteson net population change (projected 2025-2035)" aria-label="Column Chart" id="datawrapper-chart-o1MHD" src="https://datawrapper.dwcdn.net/o1MHD/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="258" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+            <br>
+            <iframe title="Matteson projected population change" aria-label="Line chart" id="datawrapper-chart-novtI" src="https://datawrapper.dwcdn.net/novtI/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="343" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Household Structure Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Matteson is home to fewer families with children, and more small households.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Over the past decade, Matteson's mix of family types has shifted in ways that imply changes in local housing needs and preferences. For example:
+            </p>
+            <p class="text-gray-700 pb-2">
+              <strong>More adults living with parents and roommates</strong> suggests people want to live in Matteson but can't find and/or afford housing of their own.
+            </p>
+            <p class="text-gray-700 pb-2">
+              <strong>More seniors living alone</strong> suggests some older residents may be interested in downsizing from a house that is too large for them into something smaller and lower-maintenance.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Most <strong>nonfamily households</strong> earn less than the median income and may need smaller, lower-cost housing options in the future.
+              </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Matteson changes in household structure" aria-label="Grouped Bars" id="datawrapper-chart-K11Bi" src="https://datawrapper.dwcdn.net/K11Bi/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="392" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+            <br>
+            <iframe title="Matteson household structure by income" aria-label="Stacked Bars" id="datawrapper-chart-u6oLW" src="https://datawrapper.dwcdn.net/u6oLW/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="203" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+    </div>
+    </div>
+    </div>
+  </div>
+
+    <!-- Jobs and Workers Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Matteson is adding more jobs than workers.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:px-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Following the closure of the mall and the COVID-19 pandemic, Matteson has added thousands of jobs, while the number of households has remained flat. As a result, a declining share of local jobs are held by local residents.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Nearly all (95.9%) people who work in Matteson live elsewhere, and people who work in Matteson are younger on average than the resident population.
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="Job and household change since 2015" aria-label="Line chart" id="datawrapper-chart-BR31j" src="https://datawrapper.dwcdn.net/BR31j/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="414" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+            <br>
+            <iframe title="Workforce age" aria-label="Stacked Bars" id="datawrapper-chart-SH5qR" src="https://datawrapper.dwcdn.net/SH5qR/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="176" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Housing Diversity Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          The majority of homes in Matteson are 3+ bedroom single-family houses.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-3/6">
+            <p class="text-gray-700 pb-2">
+              Most housing units in Matteson are detached single family with 3+ bedrooms. There are very few multifamily units and rentals available.
+            </p>
+            <p class="text-gray-700 pb-2">
+              The housing stock offers limited options for young professionals and first-time homebuyers, who also prefer townhouses, condos, and apartments, as well as small (less than 3 bed) single-family homes.
+            </p>
+            <p class="text-gray-700 pb-2">
+              Additionally, most nonfamily households earn less than the median income and may need smaller, lower-cost housing options in the future. This would be especially true for seniors aging in houses that are larger than they need and increasingly difficult and costly to maintain.
+            </p>
+          </div>
+          <div class="md:w-3/6">
+            <iframe title="Matteson's housing stock by tenure" aria-label="Stacked Bars" id="datawrapper-chart-LVTos" src="https://datawrapper.dwcdn.net/LVTos/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="505" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ownership Affordability Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          Home ownership in Matteson is affordable to most households, and the home vacany rate is high.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              The typical home price in Matteson is affordable to a median-income household earning $119,000 per year.
+            </p>
+            <p class="text-gray-700 pb-2">
+             The home vacancy rate is high, at 2.4%, and has measured above the healthy home vacancy rate of 1.5% since 2013. This indicates a mismatch between the type of homes available and the units desired by people who want to live in Matteson.
+            </p>
+            <p class="text-gray-700 pb-2">
+              About 360 of Matteson's single-family homes are owned by real estate investors, the majority of them large out-of-state companies. These homes are used as rentals - another indication that Matteson's housing stock does not match community needs.
+            </p>
+          </div>
+          <div class="md:w-4/6">
+            <iframe title="How affordable is Matteson?" aria-label="Line chart" id="datawrapper-chart-G5xy6" src="https://datawrapper.dwcdn.net/G5xy6/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="449" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rental Affordability Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+          There are not enough rental units to meet demand.
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:px-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-2/6">
+            <p class="text-gray-700 pb-2">
+              Since 2020, the rental vacancy rate in Matteson has plummeted to near 0, well under a healthy vacancy rate of 7.4%
+            </p>
+            <br>
+            <p class="text-gray-700 pb-2">
+              Rental units are extremely limited in Matteson. In 2025, there were only 80 total units listed. 
+            </p>
+            <p class="text-gray-700 pb-2">
+            Available rentals in Matteson consist of mostly 3+ bedroom single-family homes and townhomes, which demand higher rental prices. Rental units in apartments are more affordable, but are limited to a few older buildings. 
+          </p>
+          </div>
+          <div class="md:w-4/6">
+            <div class="flow-root">
+  <div class="overflow-x-auto">
+    <div class="inline-block min-w-full align-middle">
+      <table class="min-w-full divide-y divide-gray-300">
+        <thead class="bg-gray-50">
+          <p class="text-gray-700 pb-2">
+              <strong>Available rentals in Matteson, 2021-2025</strong>
+            </p>
+          <tr>
+            <th scope="col" class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Rental Unit Type</th>
+            <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Avg. Price</th>
+            <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Avg. Bedrooms</th>
+            <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Avg. Year Built</th>
+            <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Units Rented</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          <tr>
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">Single-family home</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$2,180</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">3.3</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">1969</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">266</td>
+          </tr>
+          <tr>
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">Townhouse</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$2,195</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">2.45</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">2002</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">61</td>
+          </tr>
+          <tr>
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">Apartment</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">$1,532</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">2.2</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">1978</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">86</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Card -->
+    <div class="sm:mx-auto sm:max-w-3xl divide-y divide-gray-200 overflow-hidden sm:rounded-lg bg-white shadow-sm">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-3xl font-semibold leading-9 text-gray-900">
+         Explore more housing and demographic data on a map
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:px-6">
+          <iframe title="Map" src="https://matteson.communityscale.com/map" scrolling="no" frameborder="0" class="w-full h-[600px] border-0"></iframe>
+           <br>
+           <a class="text-gray-700 pb-2" href="https://matteson.communityscale.com/map" target="_blank" class="text-blue-600 hover:underline">Click here to view the map fullscreen.</a>
+      </div>
+    </div>
+
+
+  </main>
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="bg-white mt-8">
+    <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+      <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-6">
+        <!-- Will County CED -->
+        <a href="https://willcountyced.com/" target="_blank">
+          <img src="./images/CEDlogo.png" alt="RPC" class="h-9">
+        </a>
+        <span class="text-sm text-gray-600">
+          The Will County Center for Economic Development (CED) exists to improve the quality of life for all residents of Will County, IL.
+        </span>
+
+        <!-- CommunityScale -->
+        <a href="https://www.communityscale.com/" target="_blank">
+          <img class="h-9" src="./images/cslogo.svg" alt="CommunityScale" />
+        </a>
+        <span class="text-sm text-gray-600">
+          CommunityScale is an urban planning consultancy focused on helping communities across the country improve equity, economic mobility, and housing attainability.
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================
+       JAVASCRIPT
+       ======================================== -->
+  <script>
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Affordability Factors Toggle
+    function toggleSourcesAfford() {
+      const details = document.getElementById('sourcesDetailsAfford');
+      const chevron = document.getElementById('chevronIconAfford');
+      details.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    }
+
+    // Event listener for affordability toggle
+    document.getElementById('sourcesToggleAfford').addEventListener('click', toggleSourcesAfford);
+
+    // Datawrapper Responsive Height Script
+    window.addEventListener("message", function(a) {
+      if (void 0 !== a.data["datawrapper-height"]) {
+        var e = document.querySelectorAll("iframe");
+        for (var t in a.data["datawrapper-height"]) {
+          for (var r = 0; r < e.length; r++) {
+            if (e[r].contentWindow === a.source) {
+              var i = a.data["datawrapper-height"][t] + "px";
+              e[r].style.height = i;
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
