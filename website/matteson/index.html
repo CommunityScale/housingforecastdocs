@@ -175,64 +175,55 @@
         </h1>
       </div>
 
-      <!-- Desktop Navigation -->
-      <div class="hidden lg:flex lg:gap-x-6">
-        <a href="#" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
-          <span class="material-icons-outlined text-sm">arrow_upward_alt</span>
-          Top
-        </a>
-      </div>
+     <!-- Desktop Navigation -->
+    <div class="hidden lg:flex lg:gap-x-6">
+      <a href="#" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
+        <span class="material-icons-outlined text-sm">arrow_upward_alt</span>
+        Top
+      </a>
+      <a href="map.html" class="text-sm/6 font-semibold text-gray-900 hover:bg-gray-100 hover:shadow-sm px-3 py-2 rounded-md transition-all duration-200 flex items-center gap-1">
+        <span class="material-icons-outlined text-sm">map</span>
+        Map
+      </a>
+    </div>
 
-      <!-- Mobile Menu Button -->
-      <div class="flex lg:hidden">
-        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
-          <span class="sr-only">Open main menu</span>
+    <!-- Mobile Menu Button -->
+    <div class="flex lg:hidden">
+      <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
+        <span class="sr-only">Open main menu</span>
+        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 z-50"></div>
+    <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+      <div class="flex items-center justify-between">
+        <a href="#" class="-m-1.5 p-1.5">
+          <span class="sr-only">Matteson</span>
+          <img class="h-8 w-auto" src="images/logo.png" alt="" />
+        </a>
+        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
+          <span class="sr-only">Close menu</span>
           <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="lg:hidden hidden" role="dialog" aria-modal="true">
-      <div class="fixed inset-0 z-50"></div>
-      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-        <div class="flex items-center gap-x-6">
-          <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">CommunityScale</span>
-            <img class="h-8 w-auto" src="cslogo.svg" alt="" />
-          </a>
-          <a href="#" class="ml-auto rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 whitespace-nowrap">
-            Sign up
-          </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" onclick="toggleMobileMenu()">
-            <span class="sr-only">Close menu</span>
-            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="mt-6 flow-root">
-          <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
-              <!-- Mobile navigation links go here -->
-            </div>
-            <div class="py-6">
-              <!-- Mobile search -->
-              <div class="relative mb-4">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <input type="search" placeholder="Search..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
-              </div>
-            </div>
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10">
+          <div class="space-y-2 py-6">
+            <a href="#" onclick="toggleMobileMenu()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Return to Top</a>
+            <a href="map.html" onclick="toggleMobileMenu()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Map</a>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </header>
 
   <!-- ========================================
@@ -493,7 +484,7 @@
             </p>
             <br>
             <p class="text-gray-700 pb-2">
-              Rental units are extremely limited in Matteson. In 2025, there were only 80 total units listed. 
+              Rental units are extremely limited in Matteson - there are approximately 1,550 rental units, and in 2025, only 5% of those (80 units) were listed for rent.
             </p>
             <p class="text-gray-700 pb-2">
             Available rentals in Matteson consist of mostly 3+ bedroom single-family homes and townhomes, which demand higher rental prices. Rental units in apartments are more affordable, but are limited to a few older buildings. 
@@ -506,14 +497,14 @@
       <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
           <p class="text-gray-700 pb-2">
-              <strong>Available rentals in Matteson, 2021-2025</strong>
+              <strong>Rental listings in Matteson, 2021-2025</strong>
             </p>
           <tr>
             <th scope="col" class="py-3 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Rental Unit Type</th>
             <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Avg. Price</th>
             <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Avg. Bedrooms</th>
             <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Avg. Year Built</th>
-            <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Units Rented</th>
+            <th scope="col" class="px-3 py-3 text-left text-sm font-semibold text-gray-900">Number Listings</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
@@ -555,13 +546,13 @@
          Explore more housing and demographic data on a map
         </h3>
       </div>
+      
       <div class="px-4 py-5 sm:px-6">
           <iframe title="Map" src="https://matteson.communityscale.com/map" scrolling="no" frameborder="0" class="w-full h-[600px] border-0"></iframe>
            <br>
            <a class="text-gray-700 pb-2" href="https://matteson.communityscale.com/map" target="_blank" class="text-blue-600 hover:underline">Click here to view the map fullscreen.</a>
       </div>
-    </div>
-
+      </div>
 
   </main>
 
@@ -571,13 +562,10 @@
   <footer class="bg-white mt-8">
     <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
       <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-6">
-        <!-- Will County CED -->
-        <a href="https://willcountyced.com/" target="_blank">
-          <img src="./images/CEDlogo.png" alt="RPC" class="h-9">
+        <!-- Village of Matteson -->
+        <a href="https://www.villageofmatteson.org/" target="_blank">
+          <img src="./images/logo.png" alt="RPC" class="h-9">
         </a>
-        <span class="text-sm text-gray-600">
-          The Will County Center for Economic Development (CED) exists to improve the quality of life for all residents of Will County, IL.
-        </span>
 
         <!-- CommunityScale -->
         <a href="https://www.communityscale.com/" target="_blank">
