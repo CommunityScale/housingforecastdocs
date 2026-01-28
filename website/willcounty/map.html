@@ -125,16 +125,16 @@
                             <option value="tract:hh_change_23_20">Household change 2020-2023 (%)</option>
                             <option value="tract:median_hh_income_23">Median household income (2023)</option>
                             <option value="tract:commute_gt45mins_sh_23">Share of population commuting 45+ minutes (2023)</option>
-                            <!-- <option value="tract:pop_23">Population (2023)</option> -->
-                            <!-- <option value="tract:housing_unit_count_23">Housing unit count (2023)</option> -->
-                            <!-- <option value="tract:total_hh_23">Total households (2023)</option> -->
                         </optgroup>
                         <optgroup label="Zip Code Data (Zillow)">
                             <option value="zip:zhvi_20">Typical home value 2020 (ZHVI)</option>
                             <option value="zip:zhvi_25">Typical home value 2025 (ZHVI)</option>
                             <option value="zip:zhvi_change_20_25">Home value change 2020-2025 (%)</option>
                         </optgroup>
-
+                        <optgroup label="Real Estate">
+                            <option value="sales:price_per_sqft">Sales listings - Price</option>
+                            <option value="rental:price">Rental listings - Price</option>
+                        </optgroup>
                         <optgroup label="Local Data">
                             <option value="geojson:MedianYearBuilt">Median Year Built</option>
                             <option value="geojson:NWI">Walkability</option>
@@ -301,7 +301,7 @@
         rentalListings: 'rental_listings.csv',
         medianYearBuilt: 'MedianYearBuilt.geojson',
         nwi: 'NWI.geojson',
-        unitChange: 'https://raw.githubusercontent.com/CommunityScale/public/refs/heads/main/data/IL/UnitChange.geojson'
+        unitChange: 'UnitChange.geojson'
     };
 
     // Layer source information
@@ -322,15 +322,6 @@
             source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates'
         },
         'tract:median_hh_income_23': {
-            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)'
-        },
-        'tract:pop_23': {
-            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)'
-        },
-        'tract:housing_unit_count_23': {
-            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)'
-        },
-        'tract:total_hh_23': {
             source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)'
         },
         'tract:commute_gt45mins_sh_23': {
@@ -716,6 +707,10 @@
     // FUNCTIONS
     // ============================================
 
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+
     function fitMapToCountyAPI() {
         // Query features and fit to county bounds
         let attempts = 0;
@@ -802,6 +797,7 @@
     }
 
     // Proper CSV parser that handles quoted fields with commas
+    // CSV parsing functions
     function parseCSV(csvText) {
         const lines = csvText.trim().split(/\r?\n/);
 
@@ -880,6 +876,10 @@
         return breaks;
     }
 
+    // ============================================
+    // LAYER DISPLAY FUNCTIONS
+    // ============================================
+
     // Display sales layer
     function displaySalesLayer(field) {
         clearListingsLayers();
@@ -896,12 +896,14 @@
         // Convert to GeoJSON with price per square foot calculation
         const features = salesListingsData
             .filter(listing => {
-                return listing.latitude && listing.longitude &&
-                       listing.price && listing.squareFootage &&
-                       listing.squareFootage > 0;
+                const hasCoords = listing.latitude && listing.longitude;
+                const hasPrice = listing.price;
+                const hasSquareFoot = listing.squareFoot && listing.squareFoot > 0;
+                
+                return hasCoords && hasPrice && hasSquareFoot;
             })
             .map((listing, index) => {
-                const pricePerSqFt = listing.price / listing.squareFootage;
+                const pricePerSqFt = listing.price / listing.squareFoot;
 
                 // Build full address
                 let fullAddress = listing.formattedAddress;
@@ -922,7 +924,7 @@
                     properties: {
                         fullAddress: fullAddress,
                         price: listing.price,
-                        squareFootage: listing.squareFootage,
+                        squareFoot: listing.squareFoot,
                         pricePerSqFt: pricePerSqFt,
                         bedrooms: listing.bedrooms,
                         bathrooms: listing.bathrooms,
@@ -944,31 +946,29 @@
         // Calculate 5 quantile breaks
         const breaks = calculateQuantileBreaks(values, 5);
 
-        // Create color expression for circle-color
-        const colorExpression = [
-            'step',
-            ['get', 'price'],
-            VIRIDIS_PALETTE[0], // Darkest color for lowest values
-            breaks[0], VIRIDIS_PALETTE[1],
-            breaks[1], VIRIDIS_PALETTE[2],
-            breaks[2], VIRIDIS_PALETTE[3],
-            breaks[3], VIRIDIS_PALETTE[4]
-        ];
-
         // Add source
         map.addSource(layerId + '-source', {
             type: 'geojson',
             data: geojson
         });
 
-        // Add circle layer
+        // Add circle layer with step expression built with literal values
+        // Force breaks to be numbers to ensure they're literal values
         map.addLayer({
             id: layerId,
             type: 'circle',
             source: layerId + '-source',
             paint: {
                 'circle-radius': 6,
-                'circle-color': colorExpression,
+                'circle-color': [
+                    'step',
+                    ['get', 'price'],
+                    VIRIDIS_PALETTE[0],
+                    Number(breaks[0]), VIRIDIS_PALETTE[1],
+                    Number(breaks[1]), VIRIDIS_PALETTE[2],
+                    Number(breaks[2]), VIRIDIS_PALETTE[3],
+                    Number(breaks[3]), VIRIDIS_PALETTE[4]
+                ],
                 'circle-stroke-color': '#ffffff',
                 'circle-stroke-width': 1,
                 'circle-opacity': 1
@@ -988,7 +988,7 @@
                 .setHTML(`
                     <div class="popup-header">${props.fullAddress}</div>
                     <div><strong>Price:</strong> $${props.price.toLocaleString()}</div>
-                    <div><strong>Square footage:</strong> ${props.squareFootage.toLocaleString()} sq ft</div>
+                    <div><strong>Square footage:</strong> ${props.squareFoot.toLocaleString()} sq ft</div>
                     <div><strong>Price per sq ft:</strong> $${Math.round(props.pricePerSqFt)}</div>
                     <div><strong>Bedrooms:</strong> ${props.bedrooms || 'N/A'}</div>
                     <div><strong>Bathrooms:</strong> ${props.bathrooms || 'N/A'}</div>
@@ -1072,16 +1072,7 @@
         // Calculate 5 quantile breaks
         const breaks = calculateQuantileBreaks(values, 5);
 
-        // Create color expression for circle-color
-        const colorExpression = [
-            'step',
-            ['get', 'price'],
-            VIRIDIS_PALETTE[0], // Darkest color for lowest values
-            breaks[0], VIRIDIS_PALETTE[1],
-            breaks[1], VIRIDIS_PALETTE[2],
-            breaks[2], VIRIDIS_PALETTE[3],
-            breaks[3], VIRIDIS_PALETTE[4]
-        ];
+        console.log('Rental breaks:', breaks);
 
         // Add source
         map.addSource(layerId + '-source', {
@@ -1089,14 +1080,22 @@
             data: geojson
         });
 
-        // Add circle layer
+        // Add circle layer with step expression built with literal values
         map.addLayer({
             id: layerId,
             type: 'circle',
             source: layerId + '-source',
             paint: {
                 'circle-radius': 6,
-                'circle-color': colorExpression,
+                'circle-color': [
+                    'step',
+                    ['get', 'price'],
+                    VIRIDIS_PALETTE[0],
+                    breaks[0], VIRIDIS_PALETTE[1],
+                    breaks[1], VIRIDIS_PALETTE[2],
+                    breaks[2], VIRIDIS_PALETTE[3],
+                    breaks[3], VIRIDIS_PALETTE[4]
+                ],
                 'circle-stroke-color': '#ffffff',
                 'circle-stroke-width': 1,
                 'circle-opacity': 1
@@ -1160,6 +1159,10 @@
     }
 
     // Update legend for sales layer
+    // ============================================
+    // LEGEND UPDATE FUNCTIONS
+    // ============================================
+
     function updateSalesLegend(breaks) {
         const legendTitle = 'Sales price';
         const legendContent = document.getElementById('legend-content');
