@@ -134,6 +134,15 @@
                             <option value="zip:zhvi_25">Typical home value 2025 (ZHVI)</option>
                             <option value="zip:zhvi_change_20_25">Home value change 2020-2025 (%)</option>
                         </optgroup>
+                        <optgroup label="Real Estate">
+                            <option value="sales:price_per_sqft">Sales listings - Price</option>
+                            <option value="rental:price">Rental listings - Price</option>
+                        </optgroup>
+                        <optgroup label="Local Data">
+                            <option value="geojson:MedianYearBuilt">Median Year Built</option>
+                            <option value="geojson:NWI">Walkability</option>
+                            <option value="geojson:UnitChange">Housing Unit Change</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -286,6 +295,18 @@
     // Color palette (darkest to lightest, darkest = highest values)
     const COLOR_PALETTE = ['#192f5e', '#3445b0', '#6e79dd', '#8795eb', '#adbfff', '#c2d8ff'];
 
+    // Viridis color palette (for listings data - darkest to lightest, darkest = lowest value)
+    const VIRIDIS_PALETTE = ["#440154", "#3b528b", "#21908c","#5dc863", "#fde725"];
+
+    // Data file URLs
+    const DATA_FILES = {
+        salesListings: 'sales_listings.csv',
+        rentalListings: 'rental_listings.csv',
+        medianYearBuilt: 'MedianYearBuilt.geojson',
+        nwi: 'NWI.geojson',
+        unitChange: 'https://raw.githubusercontent.com/CommunityScale/public/refs/heads/main/data/IL/UnitChange.geojson'
+    };
+
     // Layer source information
     const LAYER_INFO = {
         'tract:pctrent30_23': {
@@ -329,12 +350,38 @@
         'zip:zhvi_change_20_25': {
             source: 'Zillow Home Value Index (ZHVI)',
             description: 'Percent change in typical home values between 2020 and 2025.'
+        },
+        'sales:price_per_sqft': {
+            source: 'RentCast',
+            description: 'Sales data, 2021-2025.'
+        },
+        'rental:price': {
+            source: 'RentCast',
+            description: 'Rental data, 2021-2025.'
+        },
+        'geojson:MedianYearBuilt': {
+            source: 'U.S. Census Bureau, American Community Survey 5-Year Estimates (2019-2023)',
+            description: 'Median year built of housing units.'
+        },
+        'geojson:NWI': {
+            source: 'US EPA National Walkability Index',
+            description: 'The National Walkability Index aggregates walkability, access to transit, and access to amenities and jobs.'
+        },
+        'geojson:UnitChange': {
+            source: 'US Census Bureau Address Count Listing Files',
+            description: 'Net change in the number of housing units, based on address count, between 2020 and 2025.'
         }
     };
+
 
     // Data storage
     let tractData = null;
     let zipData = null;
+    let salesListingsData = null; // Will store the parsed CSV data
+    let rentalListingsData = null; // Will store the parsed CSV data
+    let medianYearBuiltData = null; // Will store the GeoJSON data
+    let nwiData = null; // Will store the GeoJSON data
+    let unitChangeData = null; // Will store the GeoJSON data
     let currentDataLayer = null;
     let currentLayerName = null; // Store the layer name separately
 
@@ -617,6 +664,51 @@
             })
             .catch(error => console.error('Error loading zip data:', error));
 
+        // Load sales listings data from CSV
+        fetch(DATA_FILES.salesListings)
+            .then(response => response.text())
+            .then(csvText => {
+                salesListingsData = parseCSV(csvText);
+                console.log(`Loaded ${salesListingsData.length} sales listings`);
+            })
+            .catch(error => console.error('Error loading sales listings:', error));
+
+        // Load rental listings data from CSV
+        fetch(DATA_FILES.rentalListings)
+            .then(response => response.text())
+            .then(csvText => {
+                rentalListingsData = parseCSV(csvText);
+                console.log(`Loaded ${rentalListingsData.length} rental listings`);
+            })
+            .catch(error => console.error('Error loading rental listings:', error));
+
+        // Load MedianYearBuilt GeoJSON
+        fetch(DATA_FILES.medianYearBuilt)
+            .then(response => response.json())
+            .then(data => {
+                medianYearBuiltData = data;
+                console.log(`Loaded MedianYearBuilt GeoJSON with ${data.features.length} features`);
+            })
+            .catch(error => console.error('Error loading MedianYearBuilt GeoJSON:', error));
+
+        // Load NWI GeoJSON
+        fetch(DATA_FILES.nwi)
+            .then(response => response.json())
+            .then(data => {
+                nwiData = data;
+                console.log(`Loaded NWI GeoJSON with ${data.features.length} features`);
+            })
+            .catch(error => console.error('Error loading NWI GeoJSON:', error));
+
+        // Load UnitChange GeoJSON
+        fetch(DATA_FILES.unitChange)
+            .then(response => response.json())
+            .then(data => {
+                unitChangeData = data;
+                console.log(`Loaded UnitChange GeoJSON with ${data.features.length} features`);
+            })
+            .catch(error => console.error('Error loading UnitChange GeoJSON:', error));
+
         // Fit to county boundary (unless custom center/zoom is specified)
         if (!CUSTOM_CENTER && !CUSTOM_ZOOM) {
             fitMapToCountyAPI();
@@ -710,6 +802,715 @@
         }
 
         return breaks;
+    }
+
+    // Proper CSV parser that handles quoted fields with commas
+    function parseCSV(csvText) {
+        const lines = csvText.trim().split(/\r?\n/);
+
+        // Parse headers
+        const headers = parseCSVLine(lines[0]);
+        console.log('CSV Headers:', headers);
+
+        const data = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = parseCSVLine(lines[i]);
+            const row = {};
+
+            headers.forEach((header, index) => {
+                let value = values[index] || '';
+
+                // Convert to number ONLY if the entire string is numeric
+                if (value === 'NA' || value === '') {
+                    row[header] = null;
+                } else if (/^-?\d+\.?\d*$/.test(value)) {
+                    // Only convert if it's entirely numeric
+                    row[header] = parseFloat(value);
+                } else {
+                    // Keep as string
+                    row[header] = value;
+                }
+            });
+            data.push(row);
+        }
+
+        // Log first row for debugging
+        if (data.length > 0) {
+            console.log('First parsed row:', data[0]);
+        }
+
+        return data;
+    }
+
+    // Parse a CSV line properly handling quoted fields with commas
+    function parseCSVLine(line) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+
+            if (char === '"') {
+                // Toggle quote state but don't add quote to output
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                // Field separator - push current field and reset
+                result.push(current);
+                current = '';
+            } else {
+                // Regular character - add to current field
+                current += char;
+            }
+        }
+        // Don't forget the last field
+        result.push(current);
+
+        return result;
+    }
+
+    // Calculate quantile breaks for listings data
+    function calculateQuantileBreaks(values, numBreaks) {
+        const sorted = values.filter(v => v != null).sort((a, b) => a - b);
+        const breaks = [];
+        const step = sorted.length / numBreaks;
+
+        for (let i = 1; i < numBreaks; i++) {
+            const index = Math.floor(i * step);
+            breaks.push(sorted[index]);
+        }
+
+        return breaks;
+    }
+
+    // Display sales layer
+    function displaySalesLayer(field) {
+        clearListingsLayers();
+
+        if (!salesListingsData) {
+            console.error('Sales listings data not loaded yet');
+            return;
+        }
+
+        const layerId = `sales-${field}`;
+        currentDataLayer = layerId;
+        currentLayerName = `sales:${field}`;
+
+        // Convert to GeoJSON with price per square foot calculation
+        const features = salesListingsData
+            .filter(listing => {
+                return listing.latitude && listing.longitude &&
+                       listing.price && listing.squareFootage &&
+                       listing.squareFootage > 0;
+            })
+            .map((listing, index) => {
+                const pricePerSqFt = listing.price / listing.squareFootage;
+
+                // Build full address
+                let fullAddress = listing.formattedAddress;
+                if (!fullAddress) {
+                    fullAddress = listing.addressLine1;
+                    if (listing.addressLine2) fullAddress += ', ' + listing.addressLine2;
+                    if (listing.city) fullAddress += ', ' + listing.city;
+                    if (listing.state) fullAddress += ', ' + listing.state;
+                    if (listing.zipCode) fullAddress += ' ' + listing.zipCode;
+                }
+
+                return {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [listing.longitude, listing.latitude]
+                    },
+                    properties: {
+                        fullAddress: fullAddress,
+                        price: listing.price,
+                        squareFootage: listing.squareFootage,
+                        pricePerSqFt: pricePerSqFt,
+                        bedrooms: listing.bedrooms,
+                        bathrooms: listing.bathrooms,
+                        status: listing.status
+                    }
+                };
+            });
+
+        const geojson = {
+            type: 'FeatureCollection',
+            features: features
+        };
+
+        console.log(`Creating sales layer with ${features.length} listings`);
+
+        // Extract price values for quantile calculation
+        const values = features.map(f => f.properties.price);
+
+        // Calculate 5 quantile breaks
+        const breaks = calculateQuantileBreaks(values, 5);
+
+        // Create color expression for circle-color
+        const colorExpression = [
+            'step',
+            ['get', 'price'],
+            VIRIDIS_PALETTE[0], // Darkest color for lowest values
+            breaks[0], VIRIDIS_PALETTE[1],
+            breaks[1], VIRIDIS_PALETTE[2],
+            breaks[2], VIRIDIS_PALETTE[3],
+            breaks[3], VIRIDIS_PALETTE[4]
+        ];
+
+        // Add source
+        map.addSource(layerId + '-source', {
+            type: 'geojson',
+            data: geojson
+        });
+
+        // Add circle layer
+        map.addLayer({
+            id: layerId,
+            type: 'circle',
+            source: layerId + '-source',
+            paint: {
+                'circle-radius': 6,
+                'circle-color': colorExpression,
+                'circle-stroke-color': '#ffffff',
+                'circle-stroke-width': 1,
+                'circle-opacity': 1
+            }
+        });
+
+        // Update legend for sales layer
+        updateSalesLegend(breaks);
+
+        // Add click handler for popup
+        map.on('click', layerId, (e) => {
+            const feature = e.features[0];
+            const props = feature.properties;
+
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div class="popup-header">${props.fullAddress}</div>
+                    <div><strong>Price:</strong> $${props.price.toLocaleString()}</div>
+                    <div><strong>Square footage:</strong> ${props.squareFootage.toLocaleString()} sq ft</div>
+                    <div><strong>Price per sq ft:</strong> $${Math.round(props.pricePerSqFt)}</div>
+                    <div><strong>Bedrooms:</strong> ${props.bedrooms || 'N/A'}</div>
+                    <div><strong>Bathrooms:</strong> ${props.bathrooms || 'N/A'}</div>
+                    <div><strong>Status:</strong> ${props.status}</div>
+                `)
+                .addTo(map);
+        });
+
+        // Change cursor on hover
+        map.on('mouseenter', layerId, () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+        // Update about layer section
+        updateAboutLayer('sales:price_per_sqft');
+
+        // Ensure overlays stay on top
+        moveOverlaysToTop();
+    }
+
+    // Display rental layer
+    function displayRentalLayer(field) {
+        clearListingsLayers();
+
+        if (!rentalListingsData) {
+            console.error('Rental listings data not loaded yet');
+            return;
+        }
+
+        const layerId = `rental-${field}`;
+        currentDataLayer = layerId;
+        currentLayerName = `rental:${field}`;
+
+        // Convert to GeoJSON
+        const features = rentalListingsData
+            .filter(listing => {
+                return listing.latitude && listing.longitude && listing.price;
+            })
+            .map(listing => {
+                // Build full address
+                let fullAddress = listing.formattedAddress;
+                if (!fullAddress) {
+                    fullAddress = listing.addressLine1;
+                    if (listing.addressLine2) fullAddress += ', ' + listing.addressLine2;
+                    if (listing.city) fullAddress += ', ' + listing.city;
+                    if (listing.state) fullAddress += ', ' + listing.state;
+                    if (listing.zipCode) fullAddress += ' ' + listing.zipCode;
+                }
+
+                return {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [listing.longitude, listing.latitude]
+                    },
+                    properties: {
+                        fullAddress: fullAddress,
+                        price: listing.price,
+                        squareFootage: listing.squareFootage,
+                        bedrooms: listing.bedrooms,
+                        bathrooms: listing.bathrooms,
+                        status: listing.status
+                    }
+                };
+            });
+
+        const geojson = {
+            type: 'FeatureCollection',
+            features: features
+        };
+
+        console.log(`Creating rental layer with ${features.length} listings`);
+
+        // Extract price values for quantile calculation
+        const values = features.map(f => f.properties.price);
+
+        // Calculate 5 quantile breaks
+        const breaks = calculateQuantileBreaks(values, 5);
+
+        // Create color expression for circle-color
+        const colorExpression = [
+            'step',
+            ['get', 'price'],
+            VIRIDIS_PALETTE[0], // Darkest color for lowest values
+            breaks[0], VIRIDIS_PALETTE[1],
+            breaks[1], VIRIDIS_PALETTE[2],
+            breaks[2], VIRIDIS_PALETTE[3],
+            breaks[3], VIRIDIS_PALETTE[4]
+        ];
+
+        // Add source
+        map.addSource(layerId + '-source', {
+            type: 'geojson',
+            data: geojson
+        });
+
+        // Add circle layer
+        map.addLayer({
+            id: layerId,
+            type: 'circle',
+            source: layerId + '-source',
+            paint: {
+                'circle-radius': 6,
+                'circle-color': colorExpression,
+                'circle-stroke-color': '#ffffff',
+                'circle-stroke-width': 1,
+                'circle-opacity': 1
+            }
+        });
+
+        // Update legend for rental layer
+        updateRentalLegend(breaks);
+
+        // Add click handler for popup
+        map.on('click', layerId, (e) => {
+            const feature = e.features[0];
+            const props = feature.properties;
+
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(`
+                    <div class="popup-header">${props.fullAddress}</div>
+                    <div><strong>Price:</strong> $${props.price.toLocaleString()}</div>
+                    ${props.squareFootage ? `<div><strong>Square footage:</strong> ${props.squareFootage.toLocaleString()} sq ft</div>` : ''}
+                    <div><strong>Bedrooms:</strong> ${props.bedrooms || 'N/A'}</div>
+                    <div><strong>Bathrooms:</strong> ${props.bathrooms || 'N/A'}</div>
+                    <div><strong>Status:</strong> ${props.status}</div>
+                `)
+                .addTo(map);
+        });
+
+        // Change cursor on hover
+        map.on('mouseenter', layerId, () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+        // Update about layer section
+        updateAboutLayer('rental:price');
+
+        // Ensure overlays stay on top
+        moveOverlaysToTop();
+    }
+
+    // Clear listings layers
+    function clearListingsLayers() {
+        // Remove sales layers
+        if (map.getLayer('sales-price_per_sqft')) {
+            map.removeLayer('sales-price_per_sqft');
+        }
+        if (map.getSource('sales-price_per_sqft-source')) {
+            map.removeSource('sales-price_per_sqft-source');
+        }
+
+        // Remove rental layers
+        if (map.getLayer('rental-price')) {
+            map.removeLayer('rental-price');
+        }
+        if (map.getSource('rental-price-source')) {
+            map.removeSource('rental-price-source');
+        }
+    }
+
+    // Update legend for sales layer
+    function updateSalesLegend(breaks) {
+        const legendTitle = 'Sales price';
+        const legendContent = document.getElementById('legend-content');
+
+        document.getElementById('legend-title').textContent = legendTitle;
+        legendContent.innerHTML = '';
+
+        // Create labels for 5 quantiles
+        const labels = [
+            `$${Math.round(breaks[0]).toLocaleString()} or less`,
+            `$${Math.round(breaks[0]).toLocaleString()} - $${Math.round(breaks[1]).toLocaleString()}`,
+            `$${Math.round(breaks[1]).toLocaleString()} - $${Math.round(breaks[2]).toLocaleString()}`,
+            `$${Math.round(breaks[2]).toLocaleString()} - $${Math.round(breaks[3]).toLocaleString()}`,
+            `$${Math.round(breaks[3]).toLocaleString()} or more`
+        ];
+
+        VIRIDIS_PALETTE.forEach((color, i) => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded-full border border-white" style="background-color: ${color}"></div>
+                <span>${labels[i]}</span>
+            `;
+            legendContent.appendChild(item);
+        });
+
+        document.getElementById('legend').classList.remove('hidden');
+    }
+
+    // Update legend for rental layer
+    function updateRentalLegend(breaks) {
+        const legendTitle = 'Rental price';
+        const legendContent = document.getElementById('legend-content');
+
+        document.getElementById('legend-title').textContent = legendTitle;
+        legendContent.innerHTML = '';
+
+        // Create labels for 5 quantiles
+        const labels = [
+            `$${Math.round(breaks[0])} or less`,
+            `$${Math.round(breaks[0])} - $${Math.round(breaks[1])}`,
+            `$${Math.round(breaks[1])} - $${Math.round(breaks[2])}`,
+            `$${Math.round(breaks[2])} - $${Math.round(breaks[3])}`,
+            `$${Math.round(breaks[3])} or more`
+        ];
+
+        VIRIDIS_PALETTE.forEach((color, i) => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded-full border border-white" style="background-color: ${color}"></div>
+                <span>${labels[i]}</span>
+            `;
+            legendContent.appendChild(item);
+        });
+
+        document.getElementById('legend').classList.remove('hidden');
+    }
+
+    // Display GeoJSON layer
+    function displayGeoJSONLayer(layerName) {
+        clearGeoJSONLayers();
+
+        if (layerName === 'MedianYearBuilt') {
+            if (!medianYearBuiltData) {
+                console.error('MedianYearBuilt GeoJSON data not loaded yet');
+                return;
+            }
+
+            const layerId = 'geojson-MedianYearBuilt';
+            currentDataLayer = layerId;
+            currentLayerName = 'geojson:MedianYearBuilt';
+
+            // Extract estimate values for quantile calculation
+            const values = medianYearBuiltData.features
+                .map(f => f.properties.estimate)
+                .filter(v => v != null && !isNaN(v))
+                .sort((a, b) => a - b);
+
+            if (values.length === 0) {
+                console.error('No valid estimate values found in MedianYearBuilt data');
+                return;
+            }
+
+            // Calculate 6 quantile breaks
+            const breaks = [];
+            for (let i = 0; i <= 6; i++) {
+                const position = (i / 6) * (values.length - 1);
+                const lower = Math.floor(position);
+                const upper = Math.ceil(position);
+                const weight = position - lower;
+                breaks.push(values[lower] * (1 - weight) + values[upper] * weight);
+            }
+
+            console.log('MedianYearBuilt breaks:', breaks);
+
+            // Create color expression using case/step
+            const colorExpression = [
+                'step',
+                ['get', 'estimate'],
+                COLOR_PALETTE[5], // Lightest color for lowest values
+                breaks[1], COLOR_PALETTE[4],
+                breaks[2], COLOR_PALETTE[3],
+                breaks[3], COLOR_PALETTE[2],
+                breaks[4], COLOR_PALETTE[1],
+                breaks[5], COLOR_PALETTE[0] // Darkest color for highest values
+            ];
+
+            // Add source
+            map.addSource(layerId + '-source', {
+                type: 'geojson',
+                data: medianYearBuiltData
+            });
+
+            // Add fill layer
+            map.addLayer({
+                id: layerId,
+                type: 'fill',
+                source: layerId + '-source',
+                paint: {
+                    'fill-color': colorExpression,
+                    'fill-opacity': 0.7
+                }
+            });
+
+            // Update legend
+            updateGeoJSONLegend('Median Year Built', breaks, true);
+
+            // Update about layer section
+            updateAboutLayer('geojson:MedianYearBuilt');
+
+            // Ensure overlays stay on top
+            moveOverlaysToTop();
+
+            console.log(`Created MedianYearBuilt layer with ${medianYearBuiltData.features.length} features`);
+
+        } else if (layerName === 'NWI') {
+            if (!nwiData) {
+                console.error('NWI GeoJSON data not loaded yet');
+                return;
+            }
+
+            const layerId = 'geojson-NWI';
+            currentDataLayer = layerId;
+            currentLayerName = 'geojson:NWI';
+
+            // Add source
+            map.addSource(layerId + '-source', {
+                type: 'geojson',
+                data: nwiData
+            });
+
+            // Add fill layer with single orange color
+            map.addLayer({
+                id: layerId,
+                type: 'fill',
+                source: layerId + '-source',
+                paint: {
+                    'fill-color': '#ff8c00', // Orange
+                    'fill-opacity': 0.7
+                }
+            });
+
+            // Update legend for single color
+            updateGeoJSONLegend('National Walkability Index', null, false, '#ff8c00');
+
+            // Update about layer section
+            updateAboutLayer('geojson:NWI');
+
+            // Ensure overlays stay on top
+            moveOverlaysToTop();
+
+            console.log(`Created NWI layer with ${nwiData.features.length} features`);
+        } else if (layerName === 'UnitChange') {
+            if (!unitChangeData) {
+                console.error('UnitChange GeoJSON data not loaded yet');
+                return;
+            }
+
+            const layerId = 'geojson-UnitChange';
+            currentDataLayer = layerId;
+            currentLayerName = 'geojson:UnitChange';
+
+            // Create color expression based on Change_UnitChange field
+            // Green for positive, gray for zero, red for negative
+            const colorExpression = [
+                'case',
+                ['>', ['get', 'Change_UnitChange'], 0], '#89aa42', // Green for positive
+                ['<', ['get', 'Change_UnitChange'], 0], '#ec6448', // Red for negative
+                '#d3d3d3' // Gray for zero/null
+            ];
+
+            // Add source
+            map.addSource(layerId + '-source', {
+                type: 'geojson',
+                data: unitChangeData
+            });
+
+            // Add fill layer with conditional coloring
+            map.addLayer({
+                id: layerId,
+                type: 'fill',
+                source: layerId + '-source',
+                paint: {
+                    'fill-color': colorExpression,
+                    'fill-opacity': 0.7
+                }
+            });
+
+            // Update legend for three categories
+            updateUnitChangeLegend();
+
+            // Add click handler for popup
+            map.on('click', layerId, (e) => {
+                const feature = e.features[0];
+                const unitChange = feature.properties.Change_UnitChange;
+
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML(`
+                        <div class="popup-header">Housing Unit Change</div>
+                        <div><strong>Change:</strong> ${unitChange > 0 ? '+' : ''}${unitChange} units</div>
+                    `)
+                    .addTo(map);
+            });
+
+            // Change cursor on hover
+            map.on('mouseenter', layerId, () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            map.on('mouseleave', layerId, () => {
+                map.getCanvas().style.cursor = '';
+            });
+
+            // Update about layer section
+            updateAboutLayer('geojson:UnitChange');
+
+            // Ensure overlays stay on top
+            moveOverlaysToTop();
+
+            console.log(`Created UnitChange layer with ${unitChangeData.features.length} features`);
+        }
+    }
+
+    // Ensure overlay layers are on top of all data layers
+    function moveOverlaysToTop() {
+        // Move subregions to top if it exists and is visible
+        if (map.getLayer('subregions-outline')) {
+            const visibility = map.getLayoutProperty('subregions-outline', 'visibility');
+            map.moveLayer('subregions-outline');
+        }
+    }
+
+    // Clear GeoJSON layers
+    function clearGeoJSONLayers() {
+        // Remove MedianYearBuilt layer
+        if (map.getLayer('geojson-MedianYearBuilt')) {
+            map.removeLayer('geojson-MedianYearBuilt');
+        }
+        if (map.getSource('geojson-MedianYearBuilt-source')) {
+            map.removeSource('geojson-MedianYearBuilt-source');
+        }
+
+        // Remove NWI layer
+        if (map.getLayer('geojson-NWI')) {
+            map.removeLayer('geojson-NWI');
+        }
+        if (map.getSource('geojson-NWI-source')) {
+            map.removeSource('geojson-NWI-source');
+        }
+
+        // Remove UnitChange layer
+        if (map.getLayer('geojson-UnitChange')) {
+            map.removeLayer('geojson-UnitChange');
+        }
+        if (map.getSource('geojson-UnitChange-source')) {
+            map.removeSource('geojson-UnitChange-source');
+        }
+    }
+
+    // Update legend for GeoJSON layers
+    function updateGeoJSONLegend(title, breaks, isQuantile, singleColor = null) {
+        const legendTitle = document.getElementById('legend-title');
+        const legendContent = document.getElementById('legend-content');
+
+        legendTitle.textContent = title;
+        legendContent.innerHTML = '';
+
+        if (isQuantile && breaks) {
+            // Quantile legend (like MedianYearBuilt)
+            const labels = [
+                `${Math.round(breaks[5])} or later`,
+                `${Math.round(breaks[4])} - ${Math.round(breaks[5])}`,
+                `${Math.round(breaks[3])} - ${Math.round(breaks[4])}`,
+                `${Math.round(breaks[2])} - ${Math.round(breaks[3])}`,
+                `${Math.round(breaks[1])} - ${Math.round(breaks[2])}`,
+                `before ${Math.round(breaks[0])}`
+            ];
+
+            COLOR_PALETTE.forEach((color, i) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center gap-2';
+                item.innerHTML = `
+                    <div class="w-4 h-4 rounded" style="background-color: ${color}"></div>
+                    <span>${labels[i]}</span>
+                `;
+                legendContent.appendChild(item);
+            });
+        } else if (singleColor) {
+            // Single color legend (like NWI)
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded" style="background-color: ${singleColor}"></div>
+                <span>Places with above average walkability</span>
+            `;
+            legendContent.appendChild(item);
+        }
+
+        document.getElementById('legend').classList.remove('hidden');
+    }
+
+    // Update legend for Housing Unit Change layer
+    function updateUnitChangeLegend() {
+        const legendTitle = document.getElementById('legend-title');
+        const legendContent = document.getElementById('legend-content');
+
+        legendTitle.textContent = 'Housing Unit Change, 2020-2025';
+        legendContent.innerHTML = '';
+
+        const categories = [
+            { color: '#89aa42', label: 'Units added' },
+            { color: '#d3d3d3', label: 'No change' },
+            { color: '#ec6448', label: 'Units lost' }
+        ];
+
+        categories.forEach(cat => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-2';
+            item.innerHTML = `
+                <div class="w-4 h-4 rounded" style="background-color: ${cat.color}"></div>
+                <span>${cat.label}</span>
+            `;
+            legendContent.appendChild(item);
+        });
+
+        document.getElementById('legend').classList.remove('hidden');
     }
 
     // Create fill color expression for data layer
@@ -1263,7 +2064,24 @@
                 // Small delay to ensure sources are loaded before re-applying layer
                 setTimeout(() => {
                     console.log('About to call updateDataLayer');
-                    updateDataLayer(layerType, attribute);
+                    
+                    // Handle sales layers
+                    if (layerType === 'sales') {
+                        displaySalesLayer(attribute);
+                    }
+                    // Handle rental layers
+                    else if (layerType === 'rental') {
+                        displayRentalLayer(attribute);
+                    }
+                    // Handle GeoJSON layers
+                    else if (layerType === 'geojson') {
+                        displayGeoJSONLayer(attribute);
+                    }
+                    // Handle tract and zip layers
+                    else {
+                        updateDataLayer(layerType, attribute);
+                    }
+                    
                     // Ensure legend stays visible and populated
                     const legend = document.getElementById('legend');
                     const legendTitle = document.getElementById('legend-title');
@@ -1293,8 +2111,13 @@
         console.log('Layer selector changed to:', selectedValue);
 
         if (!selectedValue || selectedValue === 'blank') {
-            // Clear the layer
+            // Clear all layers
             updateDataLayer(null, null);
+            clearListingsLayers();
+            clearGeoJSONLayers();
+            document.getElementById('legend').classList.add('hidden');
+            currentDataLayer = null;
+            currentLayerName = null;
             // Reset to "Select data layer"
             layerSelect.value = '';
         } else {
@@ -1306,7 +2129,31 @@
             currentLayerName = selectedOption.text;
             console.log('Stored layer name:', currentLayerName);
 
-            updateDataLayer(layerType, attribute);
+            // Handle sales layers
+            if (layerType === 'sales') {
+                updateDataLayer(null, null); // Clear tract/zip layers
+                clearGeoJSONLayers(); // Clear GeoJSON layers
+                displaySalesLayer(attribute);
+            }
+            // Handle rental layers
+            else if (layerType === 'rental') {
+                updateDataLayer(null, null); // Clear tract/zip layers
+                clearGeoJSONLayers(); // Clear GeoJSON layers
+                displayRentalLayer(attribute);
+            }
+            // Handle GeoJSON layers
+            else if (layerType === 'geojson') {
+                updateDataLayer(null, null); // Clear tract/zip layers
+                clearListingsLayers(); // Clear listings layers
+                displayGeoJSONLayer(attribute);
+            }
+            // Handle tract and zip layers
+            else {
+                clearListingsLayers(); // Clear listings layers
+                clearGeoJSONLayers(); // Clear GeoJSON layers
+                updateDataLayer(layerType, attribute);
+            }
+            
             // Switch to blank option to show just the arrow
             setTimeout(() => {
                 layerSelect.value = 'blank';
